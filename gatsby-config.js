@@ -1,17 +1,20 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Fernando Nogueira's technical blog`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Fernando Nogueira`,
+      summary: `a software engineer who lives and works remotely from Brazil.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `My personal technical blog about software development.`,
+    siteUrl: `https://fernando-nog.netlify.app/`,
     social: {
-      twitter: `kylemathews`,
+      linkedin: `fernando-nog`,
+      stackoverflow: `4062292/fernando-nogueira`,
+      github: `fernando-nog`,
     },
   },
   plugins: [
+    `gatsby-plugin-mdx`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -34,7 +37,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 630,
+              maxWidth: 1200,
             },
           },
           {
