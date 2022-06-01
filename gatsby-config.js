@@ -5,7 +5,7 @@ module.exports = {
       name: `Fernando Nogueira`,
       summary: `a software engineer who lives and works remotely from Brazil.`,
     },
-    description: `My personal blog about software development.`,
+    description: `My personal technical blog about software development.`,
     siteUrl: `https://fernando-nog.netlify.app/`,
     social: {
       linkedin: `fernando-nog`,
