@@ -1,14 +1,16 @@
 module.exports = {
   siteMetadata: {
-    title: `Blog`,
+    title: `Fernando Nogueira's technical blog`,
     author: {
       name: `Fernando Nogueira`,
       summary: `a software engineer who lives and works remotely from Brazil.`,
     },
     description: `My personal blog about software development.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    siteUrl: `https://fernando-nog.netlify.app/`,
     social: {
       linkedin: `fernando-nog`,
+      stackoverflow: `4062292/fernando-nogueira`,
+      github: `fernando-nog`,
     },
   },
   plugins: [
