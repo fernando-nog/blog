@@ -3,7 +3,7 @@ module.exports = {
     title: `Fernando Nogueira's technical blog`,
     author: {
       name: `Fernando Nogueira`,
-      summary: `a software engineer who lives and works remotely from Brazil.`,
+      summary: `a Brazilian software engineer who lives and works remotely from Spain.`,
     },
     description: `My personal technical blog about software development.`,
     siteUrl: `https://fernando-nog.netlify.app/`,
@@ -91,7 +91,7 @@ module.exports = {
             query: `
               {
                 allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
+                  sort: { frontmatter: { date: DESC } }
                 ) {
                   nodes {
                     excerpt
