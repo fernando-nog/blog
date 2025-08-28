@@ -10,7 +10,16 @@ import PropTypes from "prop-types"
 import * as React from "react"
 import { Helmet } from "react-helmet"
 
-const Seo = ({ description, lang, meta, title }) => {
+const Seo = ({ 
+  description, 
+  lang, 
+  meta, 
+  title, 
+  image, 
+  article = false,
+  canonicalUrl,
+  noindex = false 
+}) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -18,6 +27,11 @@ const Seo = ({ description, lang, meta, title }) => {
           siteMetadata {
             title
             description
+            siteUrl
+            image
+            author {
+              name
+            }
             social {
               linkedin
               stackoverflow
@@ -31,6 +45,11 @@ const Seo = ({ description, lang, meta, title }) => {
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
+  const siteUrl = site.siteMetadata?.siteUrl || ''
+  const defaultImage = image || site.siteMetadata?.image
+  const imageUrl = defaultImage ? `${siteUrl}${defaultImage}` : null
+  const pageUrl = canonicalUrl || `${siteUrl}`
+  const author = site.siteMetadata?.author?.name || ''
 
   return (
     <Helmet
@@ -39,11 +58,18 @@ const Seo = ({ description, lang, meta, title }) => {
       }}
       title={title}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      link={[
+        {
+          rel: 'canonical',
+          href: pageUrl,
+        },
+      ]}
       meta={[
         {
           name: `description`,
           content: metaDescription,
         },
+        // Open Graph tags
         {
           property: `og:title`,
           content: title,
@@ -54,15 +80,32 @@ const Seo = ({ description, lang, meta, title }) => {
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: article ? `article` : `website`,
         },
         {
+          property: `og:url`,
+          content: pageUrl,
+        },
+        {
+          property: `og:site_name`,
+          content: defaultTitle,
+        },
+        {
+          property: `og:locale`,
+          content: lang === 'en' ? 'en_US' : lang,
+        },
+        // Twitter Card tags
+        {
           name: `twitter:card`,
-          content: `summary`,
+          content: imageUrl ? `summary_large_image` : `summary`,
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata?.social?.twitter || ``,
+          content: author,
+        },
+        {
+          name: `twitter:site`,
+          content: author,
         },
         {
           name: `twitter:title`,
@@ -72,6 +115,53 @@ const Seo = ({ description, lang, meta, title }) => {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: `twitter:url`,
+          content: pageUrl,
+        },
+        // Image tags
+        ...(imageUrl
+          ? [
+              {
+                property: `og:image`,
+                content: imageUrl,
+              },
+              {
+                property: `og:image:width`,
+                content: `1200`,
+              },
+              {
+                property: `og:image:height`,
+                content: `630`,
+              },
+              {
+                name: `twitter:image`,
+                content: imageUrl,
+              },
+            ]
+          : []),
+        // Author and article specific tags
+        ...(article && author
+          ? [
+              {
+                name: `author`,
+                content: author,
+              },
+            ]
+          : []),
+        // Robots tag for noindex
+        ...(noindex
+          ? [
+              {
+                name: `robots`,
+                content: `noindex, nofollow`,
+              },
+              {
+                name: `googlebot`,
+                content: `noindex, nofollow`,
+              },
+            ]
+          : []),
       ].concat(meta)}
     />
   )
@@ -81,6 +171,10 @@ Seo.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
+  image: null,
+  article: false,
+  canonicalUrl: null,
+  noindex: false,
 }
 
 Seo.propTypes = {
@@ -88,6 +182,10 @@ Seo.propTypes = {
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  article: PropTypes.bool,
+  canonicalUrl: PropTypes.string,
+  noindex: PropTypes.bool,
 }
 
 export default Seo

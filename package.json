@@ -8,8 +8,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
+    "node": ">=22.17.0",
+    "npm": ">=11.4.2"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.3.0",
@@ -22,7 +22,9 @@
     "gatsby-plugin-mdx": "^5.14.0",
     "gatsby-plugin-offline": "^6.14.0",
     "gatsby-plugin-react-helmet": "^6.14.0",
+    "gatsby-plugin-robots-txt": "^1.8.0",
     "gatsby-plugin-sharp": "^5.14.0",
+    "gatsby-plugin-sitemap": "^6.15.0",
     "gatsby-remark-copy-linked-files": "^6.14.0",
     "gatsby-remark-images": "^7.14.0",
     "gatsby-remark-prismjs": "^7.14.0",
