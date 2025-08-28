@@ -5,8 +5,9 @@ module.exports = {
       name: `Fernando Nogueira`,
       summary: `a Brazilian software engineer who lives and works remotely from Spain.`,
     },
-    description: `My personal technical blog about software development.`,
+    description: `My personal technical blog about software development, engineering practices, and technology insights.`,
     siteUrl: `https://fernando-nog.netlify.app/`,
+    image: `/gatsby-icon.png`, // Default image for social sharing
     social: {
       linkedin: `fernando-nog`,
       stackoverflow: `4062292/fernando-nogueira`,
@@ -154,6 +155,16 @@ module.exports = {
           // Avoids sending pageview hits from custom paths
           exclude: ['/preview/**', '/do-not-track/me/too/'],
         },
+      },
+    },
+    // SEO plugins
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        host: `https://fernando-nog.netlify.app/`,
+        sitemap: `https://fernando-nog.netlify.app/sitemap-index.xml`,
+        policy: [{ userAgent: '*', allow: '/' }],
       },
     },
 
