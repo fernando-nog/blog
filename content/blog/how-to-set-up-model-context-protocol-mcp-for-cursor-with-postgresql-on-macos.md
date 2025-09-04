@@ -1,6 +1,6 @@
 ---
 title: "How to Set Up Model Context Protocol (MCP) for Cursor with PostgreSQL on macOS"
-date: "2025-09-01"
+date: "2025-09-04"
 description: "Learn how to configure Model Context Protocol (MCP) for Cursor to seamlessly interact with PostgreSQL databases using Docker. Complete guide with automated setup and best practices."
 tags: ["cursor", "mcp", "postgresql", "docker", "ai", "development"]
 ---
