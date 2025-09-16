@@ -1,6 +1,6 @@
 ---
 title: "How to Fix When Docker Keeps Eating Up Your Disk Space"
-date: "2025-09-15"
+date: "2025-09-16"
 description: "Practical solutions to reclaim disk space when Docker containers and images consume your storage. Learn cleanup commands and prevention strategies."
 tags: ["docker", "devops", "troubleshooting", "disk-space", "cleanup"]
 ---
