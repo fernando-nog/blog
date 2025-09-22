@@ -1,6 +1,6 @@
 ---
 title: "An Introduction to K3s: Lightweight Kubernetes for Edge and IoT"
-date: "2025-01-27"
+date: "2025-09-22"
 description: "Discover K3s, the certified lightweight Kubernetes distribution perfect for edge computing, IoT devices, and resource-constrained environments. Learn installation, advantages, and practical use cases."
 tags: ["kubernetes", "k3s", "edge-computing", "iot", "containers", "devops", "lightweight"]
 ---
