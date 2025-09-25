@@ -1,6 +1,6 @@
 ---
 title: "Chakra UI vs Radix UI vs Shadcn/ui: Choosing Based on Your Developer Profile"
-date: "2024-12-19"
+date: "2025-09-25"
 description: "Complete comparison of Chakra UI, Radix UI + Tailwind, and Shadcn/ui focused on frontend vs fullstack developer profiles to help you choose the right React component library."
 tags: ["react", "ui-libraries", "frontend", "fullstack", "comparison", "chakra-ui", "radix-ui", "shadcn-ui"]
 ---
