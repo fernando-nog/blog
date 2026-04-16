@@ -62,6 +62,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "overrides": {
+    "axios": "1.15.0",
     "lodash.template": "^4.5.0",
     "lodash": "^4.17.21",
     "workbox-build": "^6.6.0"
