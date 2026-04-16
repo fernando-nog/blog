@@ -70,3 +70,13 @@ yarn-error.log
 
 # History
 .history/
+
+# Local/private tooling (do not commit)
+.cursorrules
+AGENTS.md
+skills/
+submit-new-post.sh
+submit-to-indexnow.sh
+test-indexnow.sh
+WIP.txt
+readme-profile.md
