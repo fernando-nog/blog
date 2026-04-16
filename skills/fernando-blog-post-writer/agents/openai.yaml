@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fernando Blog Writer"
+  short_description: "Create Markdown posts in this repository's established style"
+  default_prompt: "Write a new technical blog post matching this repository's tone, structure, and formatting."

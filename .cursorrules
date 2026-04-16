@@ -1,0 +1,207 @@
+# Fernando Nogueira's Technical Blog - Cursor Rules
+
+## Project Overview
+This is a Gatsby-based technical blog featuring software development tutorials, best practices, and technical insights. The blog follows a clean, professional style with practical, developer-focused content.
+
+## Author Profile
+- Fernando Nogueira, Brazilian software engineer living in Spain
+- Focus: Full-stack development, APIs, JavaScript/TypeScript, DevOps, Cloud technologies
+- Writing style: Conversational, practical, developer-friendly
+- Tone: Professional but approachable, with occasional humor
+
+## Content Guidelines
+
+### Blog Post Structure
+All blog posts should follow this consistent structure:
+
+1. **Frontmatter** (required):
+```yaml
+---
+title: "Descriptive Title Using Title Case"
+date: "YYYY-MM-DD"
+description: "Engaging 120-160 character description for SEO and social sharing"
+tags: ["tag1", "tag2", "tag3"] # Optional but recommended
+---
+```
+
+2. **Opening Hook**: Start with a relatable problem or engaging scenario
+3. **Problem Introduction**: Clearly explain what issue the post addresses
+4. **Solution/Explanation**: Main content with practical examples
+5. **Implementation**: Step-by-step instructions when applicable
+6. **Conclusion**: Personal insights, recommendations, and next steps
+7. **References**: Clean, essential links only
+
+### File Naming Convention
+- Use lowercase with hyphens: `understanding-model-context-protocol-mcp.md`
+- Be descriptive but concise
+- Include main keywords for SEO
+
+### Writing Style Guidelines
+
+#### Tone & Voice
+- **Conversational**: Write as if explaining to a colleague
+- **Practical**: Focus on real-world applications and solutions
+- **Developer-focused**: Assume technical background but explain complex concepts
+- **Personal**: Include experiences and recommendations
+- **Professional**: Maintain technical accuracy and credibility
+
+#### Content Structure
+- **Clear headings**: Use H2 for main sections, H3 for subsections
+- **Short paragraphs**: 2-4 sentences maximum
+- **Bullet points**: Use for lists and key features
+- **Code examples**: Include practical, runnable examples
+- **Bold emphasis**: Use **bold** for important concepts and commands
+- **Proper spacing**: Include blank lines between sections
+
+#### Technical Content
+- **Step-by-step instructions**: Number complex procedures
+- **Command examples**: Always include actual commands with `$` prefix
+- **Code blocks**: Use proper syntax highlighting
+- **Error handling**: Address common issues and troubleshooting
+- **Best practices**: Include recommendations and warnings
+
+### Content Types
+
+#### Tutorial Posts
+- Start with prerequisites and setup
+- Include complete working examples
+- Provide verification steps
+- Address common errors
+- End with next steps or advanced topics
+
+#### Troubleshooting Posts
+- Begin with the problem description
+- Explain root causes
+- Provide multiple solutions (if applicable)
+- Include prevention tips
+- Reference official documentation
+
+#### Best Practices Posts
+- Structure as actionable guidelines
+- Include real-world examples
+- Explain the "why" behind recommendations
+- Compare different approaches
+- Provide implementation tips
+
+### Technical Specifications
+
+#### Frontmatter Requirements
+- **title**: Descriptive, SEO-friendly title
+- **date**: ISO format (YYYY-MM-DD)
+- **description**: 120-160 characters for SEO
+- **tags**: Array of relevant lowercase tags
+
+#### Code Formatting
+- Use proper markdown code blocks with language specification
+- Include command prompt indicators (`$` for bash)
+- Format file paths as inline code: `file_path.ext`
+- Use **bold** for UI elements and important concepts
+
+#### Link Guidelines
+- Use descriptive link text (avoid "click here")
+- Include target="_blank" for external links in components
+- Prefer official documentation links
+- Keep reference sections minimal and high-quality
+
+## Gatsby Configuration
+
+### Site Metadata
+- Site title: "Fernando Nogueira's technical blog"
+- Description: Technical blog about software development and engineering
+- URL: https://fernando-nog.netlify.app/
+- Social: LinkedIn, Stack Overflow, GitHub
+
+### Components Structure
+- Layout: Simple header/main/footer structure
+- Bio: Author info with social links
+- SEO: Proper meta tags and social sharing
+- Navigation: Previous/next post links
+
+### Styling
+- CSS Custom Properties for consistent design
+- Montserrat for headings, Merriweather for body text
+- Professional color scheme with blue primary color
+- Responsive design with mobile-first approach
+
+## AI Assistant Instructions
+
+### When Creating Blog Posts
+1. **Always** start with proper frontmatter
+2. **Use** engaging, problem-focused introductions
+3. **Include** practical examples and code snippets
+4. **Maintain** conversational but professional tone
+5. **Structure** content with clear headings and flow
+6. **End** with personal insights and recommendations
+
+### When Editing Content
+1. **Preserve** Fernando's personal voice and style
+2. **Simplify** overly academic or complex language
+3. **Add** practical examples and real-world context
+4. **Remove** unnecessary jargon or fluff
+5. **Ensure** proper markdown formatting
+
+### When Suggesting Improvements
+1. **Focus** on practical developer value
+2. **Consider** SEO optimization
+3. **Maintain** consistent voice and style
+4. **Suggest** relevant internal linking opportunities
+5. **Recommend** proper tag usage
+
+### Content Quality Checklist
+- [ ] Frontmatter complete and properly formatted
+- [ ] Engaging introduction that hooks the reader
+- [ ] Clear problem/solution structure
+- [ ] Practical examples with working code
+- [ ] Proper markdown formatting and syntax highlighting
+- [ ] Consistent voice and tone throughout
+- [ ] Personal insights and recommendations
+- [ ] Clean, minimal reference section
+- [ ] Proper file naming convention
+- [ ] SEO-optimized title and description
+
+## Development Workflow
+
+### File Management
+- Blog posts: `/content/blog/`
+- Components: `/src/components/`
+- Templates: `/src/templates/`
+- Styles: `/src/style.css`
+
+### Build Process
+- Gatsby development: `gatsby develop`
+- Production build: `gatsby build`
+- Deploy: Netlify automatic deployment
+
+### Content Updates
+- Use proper Git workflow
+- Test locally before committing
+- Check for linting errors
+- Verify responsive design
+
+## Common Patterns
+
+### Introductory Hooks
+- Start with a relatable developer problem
+- Use "Picture this:" or "If you've ever..." scenarios
+- Include pain points developers face
+- Set up the solution to come
+
+### Technical Explanations
+- Explain the "why" before the "how"
+- Use analogies for complex concepts
+- Include background context
+- Break down complex processes into steps
+
+### Code Examples
+- Always use working, tested examples
+- Include error handling where relevant
+- Explain significant parts of the code
+- Provide context for when to use the approach
+
+### Conclusions
+- Summarize key takeaways
+- Provide personal recommendations
+- Suggest next steps or related topics
+- Include encouragement for implementation
+
+Remember: The goal is to create valuable, practical content that helps developers solve real problems while maintaining Fernando's authentic voice and professional expertise.
