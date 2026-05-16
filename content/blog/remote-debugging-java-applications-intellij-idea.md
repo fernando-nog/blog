@@ -72,6 +72,7 @@ Now let's set up the debugger in IntelliJ IDEA:
 2. **Click the `+` button** and select **Remote JVM Debug**
 
 3. **Configure the connection:**
+
    - **Name:** Choose a descriptive name like "Remote Debug Production"
    - **Host:** The IP address or hostname of the remote machine (use `localhost` for local debugging)
    - **Port:** Must match the port in your JVM options (default: `5005`)
@@ -109,16 +110,19 @@ Then connect IntelliJ to `localhost:5005` - the connection will be securely tunn
 ## Troubleshooting Common Issues
 
 **Connection refused?**
+
 - Check if the application is running with debug parameters
 - Verify the port isn't blocked by a firewall
 - Ensure the address binding allows external connections (`*:5005` vs `localhost:5005`)
 
 **Breakpoints not working?**
+
 - Verify you have the exact same source code as the running application
 - Ensure the application was compiled with debug information enabled
 - Check that the classpath in your debug configuration matches your project
 
 **Connection drops randomly?**
+
 - Check network stability
 - Verify no timeout settings on intermediate firewalls/proxies
 - Consider using SSH tunneling for more stable connections
@@ -147,4 +151,3 @@ Remote debugging has saved me countless hours hunting down environment-specific 
 
 - [IntelliJ IDEA Remote Debug Tutorial](https://www.jetbrains.com/help/idea/tutorial-remote-debug.html)
 - [Java Debug Wire Protocol (JDWP)](https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/jdwp-spec.html)
-

@@ -41,7 +41,7 @@ Images              15        5         2.1GB     1.8GB (85%)
 Containers          8         2         45MB      32MB (71%)
 Local Volumes       3         1         1.2GB     800MB (66%)
 Build Cache         25        0         1.5GB     1.5GB (100%)
-Space used          4.8GB                
+Space used          4.8GB
 Reclaimable         4.1GB
 ```
 
@@ -62,6 +62,7 @@ $ docker system prune -a --volumes
 ```
 
 **Warning**: This command removes:
+
 - All stopped containers
 - All networks not used by at least one container
 - All images without at least one container associated to them
@@ -247,22 +248,24 @@ This helps you understand which containers are being created most frequently and
 If you're getting this error even after cleanup:
 
 1. Check if Docker is using a different data directory:
+
    ```bash
    $ docker info | grep "Docker Root Dir"
    ```
 
 2. Move Docker data to a larger partition if needed:
+
    ```bash
    # Stop Docker daemon
    $ sudo systemctl stop docker
-   
+
    # Move data directory
    $ sudo mv /var/lib/docker /new/location/docker
-   
+
    # Update daemon.json
    $ sudo vim /etc/docker/daemon.json
    # Add: "data-root": "/new/location/docker"
-   
+
    # Restart Docker
    $ sudo systemctl start docker
    ```
@@ -306,7 +309,7 @@ This approach has kept my Docker disk usage under control while maintaining a sm
 
 ## Conclusion
 
-Docker disk space issues are frustrating but entirely manageable with the right approach. The key is combining reactive cleanup with proactive prevention. 
+Docker disk space issues are frustrating but entirely manageable with the right approach. The key is combining reactive cleanup with proactive prevention.
 
 Start with a comprehensive cleanup using `docker system prune -a --volumes` to reclaim space immediately, then implement regular maintenance scripts and build optimization techniques to prevent future issues.
 
@@ -317,4 +320,3 @@ Remember, a few minutes of maintenance can save you hours of frustration and ens
 - [Docker System Prune Documentation](https://docs.docker.com/engine/reference/commandline/system_prune/)
 - [Docker Best Practices Guide](https://docs.docker.com/develop/best-practices/)
 - [Multi-stage Build Documentation](https://docs.docker.com/develop/best-practices/multistage-build/)
-

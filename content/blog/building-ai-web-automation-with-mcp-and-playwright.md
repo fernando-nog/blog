@@ -2,7 +2,16 @@
 title: "Building AI-Powered Web Automation with MCP and Playwright"
 date: "2025-09-12"
 description: "Learn how to combine Model Context Protocol (MCP) with Playwright to create intelligent web automation. Build AI agents that can navigate, test, and interact with web applications dynamically."
-tags: ["mcp", "playwright", "web-automation", "ai", "testing", "javascript", "integration"]
+tags:
+  [
+    "mcp",
+    "playwright",
+    "web-automation",
+    "ai",
+    "testing",
+    "javascript",
+    "integration",
+  ]
 ---
 
 Picture this: you're building an AI assistant that needs to help users with web-based tasks—filling out forms, extracting data from websites, or running automated tests across different environments. Traditional approaches require hardcoding specific selectors and workflows, but what if your AI could dynamically understand and interact with web pages just like a human would?
@@ -70,290 +79,291 @@ Create the main server file `src/index.ts`:
 ```typescript
 #!/usr/bin/env node
 
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { Server } from "@modelcontextprotocol/sdk/server/index.js"
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
-import { chromium, Browser, Page } from 'playwright';
+} from "@modelcontextprotocol/sdk/types.js"
+import { chromium, Browser, Page } from "playwright"
 
 class PlaywrightMCPServer {
-  private server: Server;
-  private browser: Browser | null = null;
-  private page: Page | null = null;
+  private server: Server
+  private browser: Browser | null = null
+  private page: Page | null = null
 
   constructor() {
     this.server = new Server(
       {
-        name: 'playwright-mcp-server',
-        version: '1.0.0',
+        name: "playwright-mcp-server",
+        version: "1.0.0",
       },
       {
         capabilities: {
           tools: {},
         },
-      }
-    );
+      },
+    )
 
-    this.setupToolHandlers();
-    this.setupLifecycle();
+    this.setupToolHandlers()
+    this.setupLifecycle()
   }
 
   private setupLifecycle() {
     // Initialize browser when server starts
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       if (!this.browser) {
-        await this.initializeBrowser();
+        await this.initializeBrowser()
       }
       return {
         tools: [
           {
-            name: 'navigate_to_url',
-            description: 'Navigate to a specific URL',
+            name: "navigate_to_url",
+            description: "Navigate to a specific URL",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 url: {
-                  type: 'string',
-                  description: 'The URL to navigate to',
+                  type: "string",
+                  description: "The URL to navigate to",
                 },
               },
-              required: ['url'],
+              required: ["url"],
             },
           },
           {
-            name: 'click_element',
-            description: 'Click on an element using CSS selector or text content',
+            name: "click_element",
+            description:
+              "Click on an element using CSS selector or text content",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 selector: {
-                  type: 'string',
-                  description: 'CSS selector or text to find the element',
+                  type: "string",
+                  description: "CSS selector or text to find the element",
                 },
                 selectorType: {
-                  type: 'string',
-                  enum: ['css', 'text'],
-                  description: 'Type of selector to use',
-                  default: 'css',
+                  type: "string",
+                  enum: ["css", "text"],
+                  description: "Type of selector to use",
+                  default: "css",
                 },
               },
-              required: ['selector'],
+              required: ["selector"],
             },
           },
           {
-            name: 'fill_input',
-            description: 'Fill an input field with text',
+            name: "fill_input",
+            description: "Fill an input field with text",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 selector: {
-                  type: 'string',
-                  description: 'CSS selector for the input field',
+                  type: "string",
+                  description: "CSS selector for the input field",
                 },
                 text: {
-                  type: 'string',
-                  description: 'Text to fill in the input field',
+                  type: "string",
+                  description: "Text to fill in the input field",
                 },
               },
-              required: ['selector', 'text'],
+              required: ["selector", "text"],
             },
           },
           {
-            name: 'extract_text',
-            description: 'Extract text content from elements',
+            name: "extract_text",
+            description: "Extract text content from elements",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 selector: {
-                  type: 'string',
-                  description: 'CSS selector for elements to extract text from',
+                  type: "string",
+                  description: "CSS selector for elements to extract text from",
                 },
               },
-              required: ['selector'],
+              required: ["selector"],
             },
           },
           {
-            name: 'take_screenshot',
-            description: 'Take a screenshot of the current page',
+            name: "take_screenshot",
+            description: "Take a screenshot of the current page",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 fullPage: {
-                  type: 'boolean',
-                  description: 'Whether to capture the full scrollable page',
+                  type: "boolean",
+                  description: "Whether to capture the full scrollable page",
                   default: false,
                 },
               },
             },
           },
           {
-            name: 'wait_for_element',
-            description: 'Wait for an element to appear on the page',
+            name: "wait_for_element",
+            description: "Wait for an element to appear on the page",
             inputSchema: {
-              type: 'object',
+              type: "object",
               properties: {
                 selector: {
-                  type: 'string',
-                  description: 'CSS selector for the element to wait for',
+                  type: "string",
+                  description: "CSS selector for the element to wait for",
                 },
                 timeout: {
-                  type: 'number',
-                  description: 'Timeout in milliseconds',
+                  type: "number",
+                  description: "Timeout in milliseconds",
                   default: 5000,
                 },
               },
-              required: ['selector'],
+              required: ["selector"],
             },
           },
         ],
-      };
-    });
+      }
+    })
   }
 
   private async initializeBrowser() {
     try {
-      this.browser = await chromium.launch({ headless: false });
-      this.page = await this.browser.newPage();
-      console.error('Browser initialized successfully');
+      this.browser = await chromium.launch({ headless: false })
+      this.page = await this.browser.newPage()
+      console.error("Browser initialized successfully")
     } catch (error) {
-      console.error('Failed to initialize browser:', error);
-      throw error;
+      console.error("Failed to initialize browser:", error)
+      throw error
     }
   }
 
   private setupToolHandlers() {
-    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    this.server.setRequestHandler(CallToolRequestSchema, async request => {
       if (!this.page) {
-        throw new Error('Browser not initialized');
+        throw new Error("Browser not initialized")
       }
 
-      const { name, arguments: args } = request.params;
+      const { name, arguments: args } = request.params
 
       try {
         switch (name) {
-          case 'navigate_to_url':
-            await this.page.goto(args.url);
+          case "navigate_to_url":
+            await this.page.goto(args.url)
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: `Successfully navigated to ${args.url}`,
                 },
               ],
-            };
+            }
 
-          case 'click_element':
-            if (args.selectorType === 'text') {
-              await this.page.getByText(args.selector).click();
+          case "click_element":
+            if (args.selectorType === "text") {
+              await this.page.getByText(args.selector).click()
             } else {
-              await this.page.click(args.selector);
+              await this.page.click(args.selector)
             }
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: `Successfully clicked element: ${args.selector}`,
                 },
               ],
-            };
+            }
 
-          case 'fill_input':
-            await this.page.fill(args.selector, args.text);
+          case "fill_input":
+            await this.page.fill(args.selector, args.text)
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: `Successfully filled input ${args.selector} with: ${args.text}`,
                 },
               ],
-            };
+            }
 
-          case 'extract_text':
-            const elements = await this.page.$$(args.selector);
+          case "extract_text":
+            const elements = await this.page.$$(args.selector)
             const texts = await Promise.all(
-              elements.map(el => el.textContent())
-            );
+              elements.map(el => el.textContent()),
+            )
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: `Extracted text: ${JSON.stringify(texts.filter(Boolean))}`,
                 },
               ],
-            };
+            }
 
-          case 'take_screenshot':
+          case "take_screenshot":
             const screenshot = await this.page.screenshot({
               fullPage: args.fullPage || false,
-              encoding: 'base64',
-            });
+              encoding: "base64",
+            })
             return {
               content: [
                 {
-                  type: 'text',
-                  text: 'Screenshot taken successfully',
+                  type: "text",
+                  text: "Screenshot taken successfully",
                 },
                 {
-                  type: 'image',
+                  type: "image",
                   data: screenshot,
-                  mimeType: 'image/png',
+                  mimeType: "image/png",
                 },
               ],
-            };
+            }
 
-          case 'wait_for_element':
+          case "wait_for_element":
             await this.page.waitForSelector(args.selector, {
               timeout: args.timeout || 5000,
-            });
+            })
             return {
               content: [
                 {
-                  type: 'text',
+                  type: "text",
                   text: `Element ${args.selector} appeared on page`,
                 },
               ],
-            };
+            }
 
           default:
-            throw new Error(`Unknown tool: ${name}`);
+            throw new Error(`Unknown tool: ${name}`)
         }
       } catch (error) {
         return {
           content: [
             {
-              type: 'text',
+              type: "text",
               text: `Error executing ${name}: ${error.message}`,
             },
           ],
           isError: true,
-        };
+        }
       }
-    });
+    })
   }
 
   async run() {
-    const transport = new StdioServerTransport();
-    await this.server.connect(transport);
-    console.error('MCP Playwright server running on stdio');
+    const transport = new StdioServerTransport()
+    await this.server.connect(transport)
+    console.error("MCP Playwright server running on stdio")
   }
 
   async cleanup() {
     if (this.browser) {
-      await this.browser.close();
+      await this.browser.close()
     }
   }
 }
 
 // Handle graceful shutdown
-const server = new PlaywrightMCPServer();
-process.on('SIGINT', async () => {
-  await server.cleanup();
-  process.exit(0);
-});
+const server = new PlaywrightMCPServer()
+process.on("SIGINT", async () => {
+  await server.cleanup()
+  process.exit(0)
+})
 
-server.run().catch(console.error);
+server.run().catch(console.error)
 ```
 
 ### Making the Server Executable
@@ -430,8 +440,8 @@ Once your MCP server is running and connected to Claude Desktop, you can start u
 ### Example 1: Automated Form Filling
 
 ```
-Human: Help me fill out a contact form on example.com. 
-Navigate to the site, fill in Name: "John Doe", 
+Human: Help me fill out a contact form on example.com.
+Navigate to the site, fill in Name: "John Doe",
 Email: "john@example.com", and Message: "Hello from MCP!"
 
 Claude: I'll help you fill out that contact form. Let me navigate to the site and handle the form submission.
@@ -444,7 +454,7 @@ Claude: I'll help you fill out that contact form. Let me navigate to the site an
 ### Example 2: Content Extraction for Research
 
 ```
-Human: Go to a news website and extract all article headlines 
+Human: Go to a news website and extract all article headlines
 from the homepage for my daily digest.
 
 Claude: I'll extract the headlines from the news site for you.
@@ -457,7 +467,7 @@ Claude: I'll extract the headlines from the news site for you.
 ### Example 3: Web Application Testing
 
 ```
-Human: Test the login flow on our staging site. Try both 
+Human: Test the login flow on our staging site. Try both
 valid and invalid credentials and take screenshots.
 
 Claude: I'll test the login flow systematically and document the results.
@@ -508,7 +518,7 @@ private async smartFindElement(selector: string, selectorType: string = 'css') {
       return await this.page.getByText(selector);
     }
   }
-  
+
   // For CSS selectors, try multiple strategies
   const strategies = [
     () => this.page.$(selector),
@@ -516,7 +526,7 @@ private async smartFindElement(selector: string, selectorType: string = 'css') {
     () => this.page.$(`[aria-label="${selector}"]`),
     () => this.page.getByRole('button', { name: selector }),
   ];
-  
+
   for (const strategy of strategies) {
     try {
       const element = await strategy();
@@ -525,7 +535,7 @@ private async smartFindElement(selector: string, selectorType: string = 'css') {
       continue;
     }
   }
-  
+
   throw new Error(`Could not find element with selector: ${selector}`);
 }
 ```
@@ -536,23 +546,23 @@ Implement connection pooling and resource management:
 
 ```typescript
 class BrowserPool {
-  private browsers: Browser[] = [];
-  private maxBrowsers = 3;
-  
+  private browsers: Browser[] = []
+  private maxBrowsers = 3
+
   async getBrowser(): Promise<Browser> {
     if (this.browsers.length < this.maxBrowsers) {
-      const browser = await chromium.launch({ headless: false });
-      this.browsers.push(browser);
-      return browser;
+      const browser = await chromium.launch({ headless: false })
+      this.browsers.push(browser)
+      return browser
     }
-    
+
     // Return least used browser
-    return this.browsers[0];
+    return this.browsers[0]
   }
-  
+
   async cleanup() {
-    await Promise.all(this.browsers.map(browser => browser.close()));
-    this.browsers = [];
+    await Promise.all(this.browsers.map(browser => browser.close()))
+    this.browsers = []
   }
 }
 ```
@@ -571,13 +581,13 @@ private validateUrl(url: string): boolean {
     if (!['http:', 'https:'].includes(parsed.protocol)) {
       return false;
     }
-    
+
     // Block internal networks in production
     const hostname = parsed.hostname;
     if (hostname === 'localhost' || hostname.startsWith('192.168.') || hostname.startsWith('10.')) {
       return process.env.NODE_ENV === 'development';
     }
-    
+
     return true;
   } catch {
     return false;
@@ -649,7 +659,7 @@ private async cleanupResources() {
   for (const page of pages.slice(1)) {
     await page.close();
   }
-  
+
   // Clear browser cache periodically
   if (this.page) {
     await this.page.evaluate(() => {
@@ -704,8 +714,8 @@ Combine web automation with API calls for comprehensive testing:
 Add mobile testing capabilities:
 
 ```typescript
-await this.page.setViewportSize({ width: 375, height: 667 });
-await this.page.emulateMedia({ media: 'screen', colorScheme: 'dark' });
+await this.page.setViewportSize({ width: 375, height: 667 })
+await this.page.emulateMedia({ media: "screen", colorScheme: "dark" })
 ```
 
 ## The Future of AI-Driven Web Automation

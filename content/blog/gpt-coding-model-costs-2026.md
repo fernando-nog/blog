@@ -2,10 +2,21 @@
 title: "GPT Coding Model Costs (2025-2026): Codex vs GPT-5.2/5.4/5.5 Pricing and Context"
 date: "2026-05-05"
 description: "A May 5, 2026 snapshot of OpenAI's GPT coding-model pricing and context windows: Codex models and flagship GPT-5.2, GPT-5.4, and GPT-5.5, plus what changes on ChatGPT Plus."
-tags: ["openai", "codex", "gpt", "ai", "pricing", "developer-productivity", "llm", "programming", "chatgpt"]
+tags:
+  [
+    "openai",
+    "codex",
+    "gpt",
+    "ai",
+    "pricing",
+    "developer-productivity",
+    "llm",
+    "programming",
+    "chatgpt",
+  ]
 ---
 
-When you run LLM-assisted coding in production, you stop asking "Which model is best?" and start asking "Which model is best *per dollar* for my workload?" The tricky part is that coding agents burn tokens differently than chat: they ingest a lot of context, but they can also emit a lot of output (patches, tests, logs, explanations).
+When you run LLM-assisted coding in production, you stop asking "Which model is best?" and start asking "Which model is best _per dollar_ for my workload?" The tricky part is that coding agents burn tokens differently than chat: they ingest a lot of context, but they can also emit a lot of output (patches, tests, logs, explanations).
 
 This post compares **capability milestones** and, more importantly, **token pricing** for OpenAI's coding-focused models through **May 5, 2026**:
 
@@ -33,24 +44,24 @@ All prices are **USD per 1M text tokens**.
 
 ### Codex Models (API)
 
-| Model | Standard input | Cached input | Standard output |
-|---|---:|---:|---:|
-| `gpt-5-codex` | $1.25 | $0.125 | $10.00 |
-| `gpt-5.1-codex` | $1.25 | $0.125 | $10.00 |
-| `gpt-5.1-codex-max` | $1.25 | $0.125 | $10.00 |
-| `gpt-5.2-codex` | $1.75 | $0.175 | $14.00 |
-| `gpt-5.3-codex` | $1.75 | $0.175 | $14.00 |
+| Model               | Standard input | Cached input | Standard output |
+| ------------------- | -------------: | -----------: | --------------: |
+| `gpt-5-codex`       |          $1.25 |       $0.125 |          $10.00 |
+| `gpt-5.1-codex`     |          $1.25 |       $0.125 |          $10.00 |
+| `gpt-5.1-codex-max` |          $1.25 |       $0.125 |          $10.00 |
+| `gpt-5.2-codex`     |          $1.75 |       $0.175 |          $14.00 |
+| `gpt-5.3-codex`     |          $1.75 |       $0.175 |          $14.00 |
 
 OpenAI also lists **Priority** pricing for `gpt-5.3-codex` at **2x** standard (input $3.50, cached input $0.35, output $28.00 per 1M tokens).
 
 ### Flagship GPT Models Commonly Used for Coding (API)
 
-| Model | Standard input | Cached input | Standard output | Context window |
-|---|---:|---:|---:|---:|
-| `gpt-5.2` | $1.75 | $0.175 | $14.00 | 400k |
-| `gpt-5.4` | $2.50 | $0.25 | $15.00 | 1.05M |
-| `gpt-5.5` | $5.00 | $0.50 | $30.00 | 1M |
-| `gpt-5.5-pro` | $30.00 | - | $180.00 | 1.05M |
+| Model         | Standard input | Cached input | Standard output | Context window |
+| ------------- | -------------: | -----------: | --------------: | -------------: |
+| `gpt-5.2`     |          $1.75 |       $0.175 |          $14.00 |           400k |
+| `gpt-5.4`     |          $2.50 |        $0.25 |          $15.00 |          1.05M |
+| `gpt-5.5`     |          $5.00 |        $0.50 |          $30.00 |             1M |
+| `gpt-5.5-pro` |         $30.00 |            - |         $180.00 |          1.05M |
 
 Sources: the model cards for `gpt-5-codex`, `gpt-5.1-codex(-max)`, `gpt-5.2-codex`, and `gpt-5.3-codex`, plus the official API pricing table.
 
@@ -82,14 +93,14 @@ A simplified view of how the coding-focused lineup progressed:
 
 All the models below can be used for coding, but they trade off capability, context, and cost differently.
 
-| Model | Surface | Context window | Max output | What you're buying |
-|---|---|---:|---:|---|
-| `gpt-5-codex` | API | 400k | 128k | Baseline Codex behavior at the lowest Codex pricing. |
-| `gpt-5.1-codex-max` | API | 400k | 128k | Best value when you want long-running, detailed coding work at older Codex pricing. |
-| `gpt-5.3-codex` | API | 400k | 128k | Highest Codex capability at mid-tier token pricing. |
-| `gpt-5.2` | API | 400k | 128k | Previous frontier model pricing, often "good enough" for most coding tasks. |
-| `gpt-5.4` | API | 1.05M | 128k | Much larger context; better when your repo/tooling context is huge. |
-| `gpt-5.5` | API | 1M | 128k | Higher cost, but aimed at better token-efficiency and fewer iterations on complex work. |
+| Model               | Surface | Context window | Max output | What you're buying                                                                      |
+| ------------------- | ------- | -------------: | ---------: | --------------------------------------------------------------------------------------- |
+| `gpt-5-codex`       | API     |           400k |       128k | Baseline Codex behavior at the lowest Codex pricing.                                    |
+| `gpt-5.1-codex-max` | API     |           400k |       128k | Best value when you want long-running, detailed coding work at older Codex pricing.     |
+| `gpt-5.3-codex`     | API     |           400k |       128k | Highest Codex capability at mid-tier token pricing.                                     |
+| `gpt-5.2`           | API     |           400k |       128k | Previous frontier model pricing, often "good enough" for most coding tasks.             |
+| `gpt-5.4`           | API     |          1.05M |       128k | Much larger context; better when your repo/tooling context is huge.                     |
+| `gpt-5.5`           | API     |             1M |       128k | Higher cost, but aimed at better token-efficiency and fewer iterations on complex work. |
 
 ## The Cost Story: What Changed From Launch to Today
 
@@ -110,7 +121,7 @@ For flagship GPT models, the jump is larger:
 
 - `gpt-5.2` -> `gpt-5.5`: input goes from $1.75 -> $5.00 per 1M tokens, and output from $14.00 -> $30.00.
 
-The bet you're making with `gpt-5.5` is that you get **fewer retries** and **less wasted output**, so the *effective* cost per merged PR (or resolved ticket) drops even if per-token rates are higher.
+The bet you're making with `gpt-5.5` is that you get **fewer retries** and **less wasted output**, so the _effective_ cost per merged PR (or resolved ticket) drops even if per-token rates are higher.
 
 ## Practical Levers to Reduce Token Spend
 
@@ -150,8 +161,8 @@ Example B: long multi-turn session with caching
 
 Estimated cost:
 
-- `gpt-5-codex`: 0.20*1.25 + 0.80*0.125 + 0.05*10.00 = $0.85
-- `gpt-5.3-codex`: 0.20*1.75 + 0.80*0.175 + 0.05*14.00 = $1.19
+- `gpt-5-codex`: 0.20*1.25 + 0.80*0.125 + 0.05\*10.00 = $0.85
+- `gpt-5.3-codex`: 0.20*1.75 + 0.80*0.175 + 0.05\*14.00 = $1.19
 
 Caching keeps these sessions sane. Without caching, Example B would be materially more expensive.
 
@@ -181,10 +192,10 @@ What to keep in mind:
 
 A practical comparison for **ChatGPT Plus** (subject to ongoing product changes):
 
-| Mode in ChatGPT | Typical Plus context window | Notes |
-|---|---:|---|
-| GPT-5.3 Instant | 32K | Fast, general chat/coding help. |
-| GPT-5.5 Thinking | 256K | Larger context; Thinking mode has its own limits and is different from API context windows. |
+| Mode in ChatGPT  | Typical Plus context window | Notes                                                                                       |
+| ---------------- | --------------------------: | ------------------------------------------------------------------------------------------- |
+| GPT-5.3 Instant  |                         32K | Fast, general chat/coding help.                                                             |
+| GPT-5.5 Thinking |                        256K | Larger context; Thinking mode has its own limits and is different from API context windows. |
 
 If you need strict cost control and repeatability, prefer the API. If you need convenience and don't want to meter usage per request, Plus can be a good default for day-to-day coding assistance.
 

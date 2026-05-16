@@ -34,6 +34,7 @@ Whether you're on macOS, Windows, or Linux, Freelens has you covered. The applic
 ### 3. **Intuitive Visual Interface**
 
 Instead of memorizing complex `kubectl` commands, you can:
+
 - Browse your cluster resources through a familiar file-tree interface
 - Click to view pod logs, describe resources, or edit configurations
 - Drag and drop YAML files for quick deployments
@@ -42,6 +43,7 @@ Instead of memorizing complex `kubectl` commands, you can:
 ### 4. **Multi-Cluster Management**
 
 Managing multiple Kubernetes clusters becomes effortless with Freelens. You can:
+
 - Switch between different cluster contexts with a single click
 - Compare resources across different environments
 - Deploy the same application to multiple clusters simultaneously
@@ -50,6 +52,7 @@ Managing multiple Kubernetes clusters becomes effortless with Freelens. You can:
 ### 5. **Built-in Development Tools**
 
 Freelens includes essential development tools:
+
 - **Integrated terminal** with cluster context awareness
 - **YAML editor** with syntax highlighting and validation
 - **Resource browser** with filtering and search capabilities
@@ -58,6 +61,7 @@ Freelens includes essential development tools:
 ### 6. **Extensible Architecture**
 
 The extension system allows you to customize Freelens for your specific needs. Popular extensions include:
+
 - **Helm integration** for package management
 - **Prometheus monitoring** for metrics visualization
 - **GitOps tools** for automated deployments
@@ -70,6 +74,7 @@ The extension system allows you to customize Freelens for your specific needs. P
 For macOS users, you have several options:
 
 **Option 1: Direct Download**
+
 ```bash
 # Download from the releases page
 # Visit: https://github.com/freelensapp/freelens/releases
@@ -77,6 +82,7 @@ For macOS users, you have several options:
 ```
 
 **Option 2: Homebrew (Recommended)**
+
 ```bash
 brew install --cask freelens
 ```
@@ -84,6 +90,7 @@ brew install --cask freelens
 ### Linux Installation
 
 **Option 1: AppImage (Universal)**
+
 ```bash
 # Download the AppImage file
 wget https://github.com/freelensapp/freelens/releases/latest/download/Freelens-*.AppImage
@@ -99,12 +106,14 @@ sudo apt install libfuse2 zlib1g-dev
 ```
 
 **Option 2: Flatpak**
+
 ```bash
 flatpak install flathub app.freelens.Freelens
 flatpak run app.freelens.Freelens
 ```
 
 **Option 3: APT Repository**
+
 ```bash
 # Add the repository
 curl -L https://raw.githubusercontent.com/freelensapp/freelens/refs/heads/main/freelens/build/apt/freelens.asc | sudo tee /etc/apt/keyrings/freelens.asc
@@ -121,11 +130,13 @@ sudo apt install freelens
 Download the EXE or MSI installer from the [releases page](https://github.com/freelensapp/freelens/releases).
 
 **Option 2: WinGet**
+
 ```powershell
 winget install Freelensapp.Freelens
 ```
 
 **Option 3: Scoop**
+
 ```powershell
 scoop bucket add extras
 scoop install freelens
@@ -148,6 +159,7 @@ If you don't have any clusters configured, you can:
 ### 3. **Exploring Your Cluster**
 
 Once connected, you'll see the main interface with:
+
 - **Cluster selector** (top-left) - Switch between different clusters
 - **Resource tree** (left sidebar) - Browse namespaces, pods, services, etc.
 - **Main content area** - View details, logs, and configurations
@@ -156,18 +168,21 @@ Once connected, you'll see the main interface with:
 ### 4. **Basic Operations**
 
 **Viewing Pod Logs:**
+
 1. Navigate to "Workloads" → "Pods"
 2. Click on any pod
 3. Select the "Logs" tab
 4. Choose the container if the pod has multiple containers
 
 **Editing Resources:**
+
 1. Right-click on any resource in the tree
 2. Select "Edit" from the context menu
 3. Modify the YAML configuration
 4. Click "Save" to apply changes
 
 **Deploying Applications:**
+
 1. Go to "Workloads" → "Deployments"
 2. Click the "+" button
 3. Paste your YAML configuration or use the form-based editor
@@ -186,6 +201,7 @@ Freelens includes a built-in terminal that automatically sets the correct `kubec
 ### **Resource Monitoring**
 
 Monitor your cluster resources in real-time:
+
 - **CPU and Memory usage** for nodes and pods
 - **Network traffic** and storage metrics
 - **Event logs** for troubleshooting
@@ -207,6 +223,7 @@ Install extensions to enhance functionality:
 ### **1. Organize Your Clusters**
 
 Use descriptive names for your cluster contexts:
+
 ```bash
 # Instead of generic names like "default"
 kubectl config rename-context minikube dev-cluster
@@ -216,6 +233,7 @@ kubectl config rename-context gke_production production-cluster
 ### **2. Leverage Namespaces**
 
 Organize your resources using namespaces:
+
 - **Development**: `dev`, `staging`
 - **Teams**: `frontend`, `backend`, `data`
 - **Environments**: `production`, `staging`, `development`
@@ -223,6 +241,7 @@ Organize your resources using namespaces:
 ### **3. Use Resource Filtering**
 
 Take advantage of Freelens' filtering capabilities:
+
 - Filter pods by status (Running, Pending, Failed)
 - Search for specific resources by name
 - Group resources by labels
@@ -230,6 +249,7 @@ Take advantage of Freelens' filtering capabilities:
 ### **4. Monitor Resource Usage**
 
 Keep an eye on resource consumption:
+
 - Set up alerts for high CPU/memory usage
 - Monitor pod restarts and failures
 - Track resource quotas and limits
@@ -283,6 +303,7 @@ Freelens represents a significant step forward in making Kubernetes management m
 The combination of visual interface, multi-cluster support, and extensibility makes Freelens an excellent choice for both beginners learning Kubernetes and experienced teams managing complex deployments. Whether you're debugging a failing pod, monitoring resource usage, or deploying a new application, Freelens provides the tools you need in an intuitive package.
 
 **Key takeaways:**
+
 - Freelens is completely free and open-source
 - Works across macOS, Windows, and Linux
 - Provides visual management for Kubernetes clusters

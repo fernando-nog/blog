@@ -2,7 +2,16 @@
 title: "An Introduction to K3s: Lightweight Kubernetes for Edge and IoT"
 date: "2025-09-22"
 description: "Discover K3s, the certified lightweight Kubernetes distribution perfect for edge computing, IoT devices, and resource-constrained environments. Learn installation, advantages, and practical use cases."
-tags: ["kubernetes", "k3s", "edge-computing", "iot", "containers", "devops", "lightweight"]
+tags:
+  [
+    "kubernetes",
+    "k3s",
+    "edge-computing",
+    "iot",
+    "containers",
+    "devops",
+    "lightweight",
+  ]
 ---
 
 If you've ever tried to run Kubernetes on a Raspberry Pi or a small edge device, you know the pain. Traditional Kubernetes distributions are resource-hungry beasts that require gigabytes of RAM and multiple CPU cores just to get started. What if I told you there's a way to run a fully certified Kubernetes cluster with just 512MB of RAM? Enter K3s—the game-changer for edge computing and IoT deployments.
@@ -128,6 +137,7 @@ sudo k3s kubectl cluster-info
 Setting up a multi-node cluster is equally straightforward:
 
 **On the master node:**
+
 ```bash
 # Install K3s server
 curl -sfL https://get.k3s.io | sh -
@@ -137,6 +147,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
 **On worker nodes:**
+
 ```bash
 # Install K3s agent
 curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=YOUR_TOKEN sh -
@@ -199,15 +210,15 @@ Perfect for learning Kubernetes concepts without expensive hardware:
 
 ## K3s vs Standard Kubernetes
 
-| Feature | Standard Kubernetes | K3s |
-|---------|-------------------|-----|
-| **Binary Size** | Multiple components | Single 70MB binary |
-| **Memory Usage** | 2GB+ minimum | 512MB+ minimum |
-| **Installation** | Complex, multiple steps | Single command |
-| **Dependencies** | Many external deps | Self-contained |
-| **ARM Support** | Limited | Excellent |
-| **Edge Ready** | No | Yes |
-| **Production Ready** | Yes | Yes |
+| Feature              | Standard Kubernetes     | K3s                |
+| -------------------- | ----------------------- | ------------------ |
+| **Binary Size**      | Multiple components     | Single 70MB binary |
+| **Memory Usage**     | 2GB+ minimum            | 512MB+ minimum     |
+| **Installation**     | Complex, multiple steps | Single command     |
+| **Dependencies**     | Many external deps      | Self-contained     |
+| **ARM Support**      | Limited                 | Excellent          |
+| **Edge Ready**       | No                      | Yes                |
+| **Production Ready** | Yes                     | Yes                |
 
 ## Best Practices and Tips
 
@@ -269,14 +280,14 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: app
-    resources:
-      requests:
-        memory: "64Mi"
-        cpu: "100m"
-      limits:
-        memory: "128Mi"
-        cpu: "200m"
+    - name: app
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "128Mi"
+          cpu: "200m"
 ```
 
 ### 3. **Networking Issues**
@@ -308,6 +319,3 @@ Start with a single-node installation on your development machine, experiment wi
 - [CNCF K3s Project](https://www.cncf.io/projects/k3s/)
 - [K3s Architecture Documentation](https://k3s.io/docs/concepts/)
 - [K3s Installation Guide](https://k3s.io/docs/installation/)
-
-
-

@@ -4,7 +4,6 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-
 const BlogListingPage = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
@@ -14,9 +13,7 @@ const BlogListingPage = ({ data, location }) => {
       <Layout location={location} title={siteTitle}>
         <Seo title="Blog Posts" />
         <Bio />
-        <p>
-          No blog posts found...
-        </p>
+        <p>No blog posts found...</p>
       </Layout>
     )
   }

@@ -16,7 +16,7 @@ This guide walks you through setting up Model Context Protocol (MCP) for Cursor 
 ### Key Benefits of MCP:
 
 - **Standardization**: Unified protocol for connecting AI models with databases, APIs, and tools
-- **Real-time Context**: AI can access live data rather than relying on outdated training information  
+- **Real-time Context**: AI can access live data rather than relying on outdated training information
 - **Security**: Secure, bidirectional connections with proper authentication and access controls
 - **Flexibility**: Custom integrations while maintaining ecosystem compatibility
 - **Enhanced Productivity**: Direct database queries and analysis within your IDE
@@ -45,7 +45,7 @@ $ docker-compose --version
 Create a `docker-compose.yml` file in your project directory:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
@@ -89,19 +89,19 @@ set -e
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE cursor_test;
     CREATE DATABASE cursor_prod;
-    
+
     GRANT ALL PRIVILEGES ON DATABASE cursor_test TO $POSTGRES_USER;
     GRANT ALL PRIVILEGES ON DATABASE cursor_prod TO $POSTGRES_USER;
-    
+
     -- Create some example schemas
     \c cursor_dev;
     CREATE SCHEMA IF NOT EXISTS app_schema;
     GRANT ALL ON SCHEMA app_schema TO $POSTGRES_USER;
-    
+
     \c cursor_test;
     CREATE SCHEMA IF NOT EXISTS app_schema;
     GRANT ALL ON SCHEMA app_schema TO $POSTGRES_USER;
-    
+
     \c cursor_prod;
     CREATE SCHEMA IF NOT EXISTS app_schema;
     GRANT ALL ON SCHEMA app_schema TO $POSTGRES_USER;
@@ -126,7 +126,6 @@ $ docker-compose logs postgres
 # Wait for PostgreSQL to be ready
 $ docker-compose exec postgres pg_isready -U cursor_user -d cursor_dev
 ```
-
 
 ### Basic MCP Configuration
 
@@ -181,7 +180,6 @@ You can also set up multiple database connections by adding additional server co
   }
 }
 ```
-
 
 ### Advanced Connection Options
 
@@ -244,6 +242,7 @@ localhost:5432:cursor_dev:cursor_user:your_secure_password
 ```
 
 Set proper permissions:
+
 ```bash
 chmod 600 ~/.pgpass
 ```
@@ -257,7 +256,7 @@ chmod 600 ~/.pgpass
       "postgres": {
         "command": "npx",
         "args": [
-          "@modelcontextprotocol/server-postgres", 
+          "@modelcontextprotocol/server-postgres",
           "postgresql://cursor_user@localhost:5432/cursor_dev"
         ]
       }
@@ -295,7 +294,7 @@ fi
 if ! docker-compose ps | grep -q "postgres.*Up"; then
     echo "Starting PostgreSQL with Docker Compose..."
     docker-compose up -d postgres
-    
+
     # Wait for PostgreSQL to be ready
     echo "Waiting for PostgreSQL to be ready..."
     until docker-compose exec postgres pg_isready -U cursor_user -d cursor_dev; do
@@ -397,18 +396,18 @@ set -e
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     CREATE DATABASE cursor_test;
     CREATE DATABASE cursor_prod;
-    
+
     GRANT ALL PRIVILEGES ON DATABASE cursor_test TO $POSTGRES_USER;
     GRANT ALL PRIVILEGES ON DATABASE cursor_prod TO $POSTGRES_USER;
-    
+
     \c cursor_dev;
     CREATE SCHEMA IF NOT EXISTS app_schema;
     GRANT ALL ON SCHEMA app_schema TO $POSTGRES_USER;
-    
+
     \c cursor_test;
     CREATE SCHEMA IF NOT EXISTS app_schema;
     GRANT ALL ON SCHEMA app_schema TO $POSTGRES_USER;
-    
+
     \c cursor_prod;
     CREATE SCHEMA IF NOT EXISTS app_schema;
     GRANT ALL ON SCHEMA app_schema TO $POSTGRES_USER;
@@ -439,7 +438,6 @@ $ cd cursor-mcp-project
 $ docker-compose up -d
 $ cd .. && ./setup_mcp.sh
 ```
-
 
 ## Verification and Testing
 
@@ -506,4 +504,3 @@ Effective MCP configuration is essential for maintaining productive, secure data
 - **[Cursor Documentation](https://docs.cursor.com/)** - Official Cursor IDE documentation
 - **[PostgreSQL MCP Server](https://github.com/modelcontextprotocol/servers/tree/main/src/postgres)** - Official PostgreSQL MCP server implementation
 - **[Docker PostgreSQL Official Image](https://hub.docker.com/_/postgres)** - Official PostgreSQL Docker image documentation
-

@@ -91,25 +91,25 @@ Creating simple data carriers used to require tons of boilerplate:
 public class Person {
     private final String name;
     private final int age;
-    
+
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
-    
+
     public String getName() { return name; }
     public int getAge() { return age; }
-    
+
     @Override
     public boolean equals(Object o) {
         // ... 15 more lines of boilerplate
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(name, age);
     }
-    
+
     @Override
     public String toString() {
         return "Person[name=" + name + ", age=" + age + "]";
@@ -282,6 +282,7 @@ Typical applications see **20-40% performance improvements** just from JVM optim
 ### Startup Time
 
 Java 21 starts significantly faster than Java 8, crucial for:
+
 - Serverless functions
 - Containerized microservices
 - Cloud-native applications
@@ -290,6 +291,7 @@ Java 21 starts significantly faster than Java 8, crucial for:
 ### Memory Efficiency
 
 Improvements in memory usage include:
+
 - Compact strings (saves heap memory)
 - Better class data sharing
 - Improved JIT compilation
@@ -302,6 +304,7 @@ In containerized environments, Java 21 is **much smarter** about respecting CPU 
 **This is critical**: Java 8 public updates ended in 2019. Every day you run Java 8 without commercial support, you're potentially exposed to security vulnerabilities.
 
 Java 21 includes:
+
 - Years of security patches
 - Hardened cryptography
 - Improved security manager (though deprecated, better alternatives exist)
@@ -323,7 +326,7 @@ HttpRequest request = HttpRequest.newBuilder()
     .uri(URI.create("https://api.example.com/data"))
     .build();
 
-HttpResponse<String> response = client.send(request, 
+HttpResponse<String> response = client.send(request,
     HttpResponse.BodyHandlers.ofString());
 ```
 
@@ -392,6 +395,7 @@ Java 9 introduced the module system, but **you don't have to modularize** your a
 ### 2. Removed APIs
 
 Some deprecated APIs were removed:
+
 - `Thread.stop()`, `Thread.destroy()` - use interrupts instead
 - Some CORBA and Java EE modules - now separate libraries
 - Nashorn JavaScript engine - use GraalVM instead
@@ -399,6 +403,7 @@ Some deprecated APIs were removed:
 ### 3. Dependency Updates
 
 Update your dependencies to Java 11+ compatible versions:
+
 - Spring Boot: 3.x supports Java 17+
 - Hibernate: 6.x for Java 17+
 - Most libraries have Java 11+ versions by now
@@ -429,6 +434,7 @@ java {
 **Absolutely yes.** Here's my recommendation:
 
 ✅ **Upgrade if you're:**
+
 - Running production systems on Java 8
 - Building new applications
 - Concerned about security
@@ -436,6 +442,7 @@ java {
 - Wanting modern development features
 
 ⚠️ **Consider waiting if:**
+
 - You have a critical system with no test coverage (fix that first!)
 - Your dependencies don't support Java 11+ yet (rare these days)
 - You're in a regulated industry with slow approval processes (start now!)
@@ -443,6 +450,7 @@ java {
 ## My Personal Experience
 
 I've been part of several Java 8 → 17/21 migrations, and every single one resulted in:
+
 - **Better performance** (typically 25-35% improvement)
 - **Happier developers** (modern features are productive)
 - **Reduced bugs** (better language features = safer code)
@@ -479,4 +487,3 @@ What's your Java version story? Still on 8? Already on 21? Running into migratio
 - [JEP 444: Virtual Threads](https://openjdk.org/jeps/444)
 - [JEP 441: Pattern Matching for switch](https://openjdk.org/jeps/441)
 - [Inside Java - Java 21 Overview](https://inside.java/2023/09/19/java21-released/)
-

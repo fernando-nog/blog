@@ -20,6 +20,7 @@ Before diving into comparisons, let's clarify what we're actually comparing.
 Spring Boot with Spring MVC is the **traditional, synchronous, blocking** approach. Each incoming request is handled by a thread from a thread pool. When that thread makes an I/O call (database query, HTTP request, etc.), it **blocks and waits** for the response.
 
 **Key characteristics:**
+
 - **One thread per request** model (from a thread pool)
 - **Synchronous, blocking I/O** operations
 - **Easier to understand** and debug
@@ -31,6 +32,7 @@ Spring Boot with Spring MVC is the **traditional, synchronous, blocking** approa
 Spring WebFlux is the **reactive, non-blocking** alternative introduced in Spring 5. It's built on **Project Reactor** and follows the Reactive Streams specification. Instead of blocking threads, it uses an event-driven, asynchronous model.
 
 **Key characteristics:**
+
 - **Event-driven, non-blocking** architecture
 - **Small number of threads** handling many requests
 - **Asynchronous operations** throughout the stack
@@ -48,16 +50,16 @@ Let's see the actual difference in code. Here's a simple REST controller that fe
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         User user = userService.findById(id); // Blocks here
         return ResponseEntity.ok(user);
     }
-    
+
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.findAll(); // Blocks here
@@ -67,22 +69,22 @@ public class UserController {
 
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private RestTemplate restTemplate;
-    
+
     public User findById(Long id) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new UserNotFoundException(id));
-        
+
         // External API call - blocks the thread
         String url = "https://api.example.com/details/" + id;
         UserDetails details = restTemplate.getForObject(url, UserDetails.class);
         user.setDetails(details);
-        
+
         return user;
     }
 }
@@ -94,17 +96,17 @@ public class UserService {
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
-    
+
     @GetMapping("/{id}")
     public Mono<ResponseEntity<User>> getUser(@PathVariable Long id) {
         return userService.findById(id) // Returns immediately with Mono
             .map(ResponseEntity::ok)
             .defaultIfEmpty(ResponseEntity.notFound().build());
     }
-    
+
     @GetMapping
     public Mono<ResponseEntity<Flux<User>>> getAllUsers() {
         return Mono.just(ResponseEntity.ok(userService.findAll()));
@@ -113,13 +115,13 @@ public class UserController {
 
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository; // Reactive repository
-    
+
     @Autowired
     private WebClient webClient;
-    
+
     public Mono<User> findById(Long id) {
         return userRepository.findById(id)
             .flatMap(user -> {
@@ -135,7 +137,7 @@ public class UserService {
                     });
             });
     }
-    
+
     public Flux<User> findAll() {
         return userRepository.findAll();
     }
@@ -143,6 +145,7 @@ public class UserService {
 ```
 
 Notice the key differences:
+
 - **Return types**: `User` vs `Mono<User>`, `List<User>` vs `Flux<User>`
 - **Composition**: Reactive code uses `flatMap`, `map`, and other operators to chain operations
 - **HTTP client**: `RestTemplate` (blocking) vs `WebClient` (non-blocking)
@@ -158,13 +161,15 @@ Here's where things get interesting—and complex. Performance depends heavily o
 
 **What happens**: When your application is doing heavy computation (parsing large files, complex calculations, image processing) with moderate concurrent users.
 
-**Spring MVC behavior**: 
+**Spring MVC behavior**:
+
 - Each request gets a thread that does the work
 - Threads are busy actually computing, not waiting
 - Simple, straightforward execution model
 - Low overhead from the framework itself
 
 **Spring WebFlux behavior**:
+
 - Reactive stream overhead without I/O benefits
 - Context switching between operations
 - Additional complexity in the execution path
@@ -179,6 +184,7 @@ Here's where things get interesting—and complex. Performance depends heavily o
 **What happens**: Thousands of concurrent requests where most of the time is spent waiting for external resources (databases, APIs, file systems).
 
 **Spring MVC behavior**:
+
 - Needs a thread per concurrent request (even while waiting)
 - With 5,000 concurrent requests, you need ~5,000 threads
 - Each thread consumes ~1MB memory = ~5GB just for threads
@@ -186,6 +192,7 @@ Here's where things get interesting—and complex. Performance depends heavily o
 - Eventually hits thread pool limits and starts queuing
 
 **Spring WebFlux behavior**:
+
 - Small number of threads (typically CPU cores × 2)
 - Requests don't consume threads while waiting for I/O
 - Can handle thousands of concurrent operations with minimal memory
@@ -201,12 +208,14 @@ Here's where things get interesting—and complex. Performance depends heavily o
 **What happens**: Realistic applications that combine database queries with external service calls.
 
 **Spring MVC behavior**:
+
 - Each operation blocks its thread
 - Connection pools can become bottlenecks
 - Thread exhaustion under high load
 - Vertical scaling becomes necessary sooner
 
 **Spring WebFlux behavior**:
+
 - Non-blocking I/O throughout the stack (with R2DBC, WebClient)
 - Better resource utilization
 - More graceful handling of traffic spikes
@@ -258,6 +267,7 @@ public Product getProduct(@PathVariable Long id) {
 Reactive programming has a steep learning curve. If your team isn't familiar with reactive concepts, you'll spend more time debugging reactive streams than building features.
 
 **Common pitfalls I've seen:**
+
 - Blocking calls in reactive chains (kills performance)
 - Memory leaks from unsubscribed streams
 - Complex error handling
@@ -284,6 +294,7 @@ Choose Spring WebFlux when:
 If your application handles thousands of concurrent requests that spend most of their time waiting for I/O (external APIs, databases, message queues), WebFlux can provide significant performance improvements.
 
 **Perfect use cases:**
+
 - API gateways that aggregate multiple backend services
 - Real-time data streaming applications
 - Microservices with many inter-service calls
@@ -355,6 +366,7 @@ Begin with a new microservice or a non-critical endpoint. Get familiar with reac
 ### 2. **Ensure Full Stack Support**
 
 Make sure you have reactive drivers for everything:
+
 - **Database**: R2DBC for PostgreSQL, MySQL, etc.
 - **HTTP clients**: Use `WebClient` instead of `RestTemplate`
 - **Message brokers**: Reactive drivers for Kafka, RabbitMQ, etc.
@@ -398,12 +410,14 @@ After working with both approaches in production systems, here's my honest take:
 **Start with Spring MVC** unless you have a clear, specific reason to use WebFlux. The simplicity, debuggability, and maturity of the blocking model are valuable. Most applications don't need the complexity of reactive programming.
 
 **Consider WebFlux** when:
+
 - You're building an API gateway or aggregation service
 - You have proven performance issues under high concurrency
 - Your application is naturally event-driven or streaming-focused
 - Your team has reactive programming expertise
 
 **Never choose WebFlux** just because:
+
 - It's "modern" or "cool"
 - Someone said it's always faster (it's not)
 - You want to pad your resume (okay, maybe a little 😄)
@@ -413,6 +427,7 @@ After working with both approaches in production systems, here's my honest take:
 One often overlooked aspect: testing reactive code is more complex.
 
 **Traditional Spring MVC test:**
+
 ```java
 @Test
 public void testGetUser() {
@@ -423,6 +438,7 @@ public void testGetUser() {
 ```
 
 **Spring WebFlux test:**
+
 ```java
 @Test
 public void testGetUser() {
@@ -462,4 +478,3 @@ And remember: **a well-architected blocking application will outperform a poorly
 - [Project Reactor Reference Guide](https://projectreactor.io/docs/core/release/reference/)
 - [R2DBC - Reactive Relational Database Connectivity](https://r2dbc.io/)
 - [Spring WebClient Documentation](https://docs.spring.io/spring-framework/reference/web/webflux-webclient.html)
-

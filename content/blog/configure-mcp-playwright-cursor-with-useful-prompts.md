@@ -2,7 +2,16 @@
 title: "Configure MCP with Playwright for Cursor: Essential Setup and Powerful Prompts"
 date: "2025-09-12"
 description: "Step-by-step guide to integrate Model Context Protocol with Playwright in Cursor IDE. Includes essential configuration, troubleshooting tips, and a collection of powerful prompts for AI-assisted web automation."
-tags: ["mcp", "playwright", "cursor", "ide", "prompts", "configuration", "web-automation"]
+tags:
+  [
+    "mcp",
+    "playwright",
+    "cursor",
+    "ide",
+    "prompts",
+    "configuration",
+    "web-automation",
+  ]
 ---
 
 If you've been using Cursor IDE and want to supercharge your development workflow with AI-powered web automation, you're in for a treat. Setting up Model Context Protocol (MCP) with Playwright in Cursor opens up incredible possibilities—from automated testing to dynamic content extraction, all driven by natural language prompts.
@@ -145,6 +154,7 @@ Now that your setup is working, here are the most effective prompt patterns I've
 ### Testing and Quality Assurance
 
 **Form Validation Testing**
+
 ```
 Test the contact form on [website URL]. Try these scenarios:
 1. Submit with all fields empty (check error messages)
@@ -155,6 +165,7 @@ Tell me what validation errors appear and if the form behavior is correct.
 ```
 
 **Cross-Page Navigation Testing**
+
 ```
 Starting from the homepage of [website], navigate through this user journey:
 1. Click on "Products" in the main menu
@@ -165,16 +176,18 @@ Take a screenshot at each step and tell me if any links are broken or pages fail
 ```
 
 **Responsive Design Verification**
+
 ```
-Visit [website URL] and check how it looks on mobile. 
-Change the viewport to 375x667 (iPhone size), navigate to the main sections, 
-and take screenshots. Tell me if there are any layout issues or elements 
+Visit [website URL] and check how it looks on mobile.
+Change the viewport to 375x667 (iPhone size), navigate to the main sections,
+and take screenshots. Tell me if there are any layout issues or elements
 that don't fit properly.
 ```
 
 ### Content Extraction and Analysis
 
 **Competitive Analysis**
+
 ```
 Go to [competitor website] and extract:
 1. All product names from their main catalog page
@@ -185,13 +198,15 @@ Organize this data in a structured format for competitive analysis.
 ```
 
 **News and Content Monitoring**
+
 ```
-Visit [news website] and extract all article headlines from the homepage. 
-For each headline, also get the publication time if available. 
+Visit [news website] and extract all article headlines from the homepage.
+For each headline, also get the publication time if available.
 Format the results as a daily digest with timestamps.
 ```
 
 **SEO and Technical Analysis**
+
 ```
 Analyze the SEO elements of [website URL]:
 1. Extract the page title and meta description
@@ -204,6 +219,7 @@ Tell me if there are any obvious SEO issues.
 ### Development and Debugging
 
 **Feature Testing During Development**
+
 ```
 I just deployed a new feature on [staging URL]. Please test this workflow:
 1. Login with username "testuser" and password "testpass123"
@@ -214,6 +230,7 @@ Document any errors or unexpected behavior you encounter.
 ```
 
 **Bug Reproduction**
+
 ```
 Help me reproduce this bug: "Users can't submit the feedback form on mobile."
 1. Navigate to [website]/feedback
@@ -225,6 +242,7 @@ Tell me exactly what happens when you try to submit.
 ```
 
 **Performance and Load Testing Setup**
+
 ```
 Visit [website URL] and help me gather performance data:
 1. Navigate to the main page and time how long it takes to load
@@ -237,6 +255,7 @@ Report any performance issues you notice.
 ### E-commerce and Business Process Testing
 
 **Checkout Flow Validation**
+
 ```
 Test the complete purchase flow on [e-commerce site]:
 1. Browse to a product page
@@ -248,6 +267,7 @@ Document each step and identify any friction points or errors.
 ```
 
 **Inventory and Product Monitoring**
+
 ```
 Check product availability on [website]:
 1. Search for "[product name]"
@@ -261,6 +281,7 @@ Report the current status and pricing.
 ### Advanced Automation Patterns
 
 **Multi-Step Workflow with Conditional Logic**
+
 ```
 Help me test this complex workflow on [application URL]:
 
@@ -275,6 +296,7 @@ Handle any unexpected popups or errors gracefully and report what happens.
 ```
 
 **Data Collection with Pagination**
+
 ```
 Extract all product information from [catalog URL]:
 1. Start on page 1 of the product catalog
@@ -287,6 +309,7 @@ Stop if you encounter more than 50 products to avoid excessive automation.
 ```
 
 **Dynamic Content Monitoring**
+
 ```
 Set up monitoring for [news/blog website]:
 1. Visit the homepage
@@ -303,8 +326,9 @@ This will help me track when new content is published.
 ### Using Cursor's Context Features
 
 **Combine Codebase Context with Web Automation**
+
 ```
-Looking at my React component in /src/components/ContactForm.tsx, 
+Looking at my React component in /src/components/ContactForm.tsx,
 please test the live version on [staging URL]:
 1. Navigate to the contact page
 2. Test all the form fields I've defined in the component
@@ -315,8 +339,9 @@ Compare the live behavior with my component implementation.
 ```
 
 **Debugging with Real User Interactions**
+
 ```
-I'm seeing an error in my browser console when users click the submit button. 
+I'm seeing an error in my browser console when users click the submit button.
 Can you reproduce this on [website URL]?
 1. Open the contact form
 2. Fill it out normally
@@ -329,27 +354,30 @@ Help me understand when this error occurs by testing various scenarios.
 ### Optimizing Prompt Effectiveness
 
 **Be Specific About Expected Outcomes**
+
 ```
-✅ Good: "Navigate to the login page, enter 'test@example.com' and 'password123', 
+✅ Good: "Navigate to the login page, enter 'test@example.com' and 'password123',
 click login, and tell me if you see a dashboard or an error message."
 
 ❌ Vague: "Test the login functionality."
 ```
 
 **Provide Context for Decision Making**
+
 ```
-✅ Good: "I'm testing a new checkout flow. Please go through the purchase process 
-but stop before entering real payment details. Focus on identifying any confusing 
+✅ Good: "I'm testing a new checkout flow. Please go through the purchase process
+but stop before entering real payment details. Focus on identifying any confusing
 steps or unclear messaging."
 
 ❌ Unclear: "Test the checkout."
 ```
 
 **Use Structured Requests for Complex Tasks**
+
 ```
-✅ Good: "Please test these three scenarios on [URL]: 
+✅ Good: "Please test these three scenarios on [URL]:
 1. [Specific scenario with expected outcome]
-2. [Specific scenario with expected outcome] 
+2. [Specific scenario with expected outcome]
 3. [Specific scenario with expected outcome]
 Compare results and highlight any inconsistencies."
 
@@ -404,7 +432,7 @@ If automation feels sluggish:
 ```typescript
 // Add to your MCP server for better performance
 private async initializeBrowser() {
-  this.browser = await chromium.launch({ 
+  this.browser = await chromium.launch({
     headless: process.env.HEADLESS !== 'false',
     args: ['--no-sandbox', '--disable-dev-shm-usage'] // Helps with memory
   });
@@ -474,7 +502,7 @@ Set up different configurations for development vs. production:
       }
     },
     "playwright-prod": {
-      "command": "node", 
+      "command": "node",
       "args": ["/path/to/mcp-playwright-server/dist/index.js"],
       "env": {
         "NODE_ENV": "production",
@@ -525,12 +553,14 @@ Keep a document in your project with common testing prompts:
 # Web Automation Checklist
 
 ## Pre-deployment Testing
+
 - [ ] Login flow validation
-- [ ] Core user journeys 
+- [ ] Core user journeys
 - [ ] Form submission testing
 - [ ] Mobile responsiveness check
 
-## Post-deployment Verification  
+## Post-deployment Verification
+
 - [ ] Production smoke tests
 - [ ] Performance checks
 - [ ] SEO element validation
@@ -543,11 +573,13 @@ Save effective prompts as snippets in your project:
 
 ```markdown
 <!-- .cursor-prompts/form-testing.md -->
+
 # Form Testing Template
 
 Test the [FORM_NAME] form on [URL]:
+
 1. Submit with empty fields (verify required field validation)
-2. Submit with invalid email format (verify email validation)  
+2. Submit with invalid email format (verify email validation)
 3. Submit with valid data (verify success flow)
 4. Take screenshots of validation states
 
@@ -559,7 +591,7 @@ Report any UX issues or inconsistent messaging.
 **Code → Test → Fix Cycle**
 
 ```
-I just updated the validation logic in /src/utils/formValidation.js. 
+I just updated the validation logic in /src/utils/formValidation.js.
 Can you test the contact form on [staging URL] to verify:
 1. Email validation works with my new regex pattern
 2. Phone number validation accepts the formats I specified
@@ -573,10 +605,10 @@ Compare the live behavior with my implementation.
 Use MCP automation to prepare test cases for CI/CD:
 
 ```
-Help me document test cases for our CI pipeline. 
+Help me document test cases for our CI pipeline.
 Test these scenarios on [staging URL] and create a test specification:
 1. [User journey 1]
-2. [User journey 2]  
+2. [User journey 2]
 3. [Error case 1]
 4. [Error case 2]
 
