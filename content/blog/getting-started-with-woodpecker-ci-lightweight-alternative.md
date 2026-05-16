@@ -52,7 +52,7 @@ Let's get Woodpecker up and running. The easiest way is using Docker Compose:
 
 ```yaml
 # docker-compose.yml
-version: '3'
+version: "3"
 
 services:
   woodpecker-server:
@@ -332,22 +332,22 @@ steps:
 
 ### Woodpecker vs. Jenkins
 
-| Feature | Woodpecker | Jenkins |
-|---------|-----------|---------|
-| Setup Complexity | Low | High |
-| Resource Usage | Minimal | Heavy |
-| Configuration | YAML | Groovy/UI |
-| Container Support | Native | Plugin-based |
-| Learning Curve | Gentle | Steep |
+| Feature           | Woodpecker | Jenkins      |
+| ----------------- | ---------- | ------------ |
+| Setup Complexity  | Low        | High         |
+| Resource Usage    | Minimal    | Heavy        |
+| Configuration     | YAML       | Groovy/UI    |
+| Container Support | Native     | Plugin-based |
+| Learning Curve    | Gentle     | Steep        |
 
 ### Woodpecker vs. GitHub Actions
 
-| Feature | Woodpecker | GitHub Actions |
-|---------|-----------|----------------|
-| Self-Hosted | Yes | Optional |
-| Platform Lock-in | No | GitHub only |
-| Cost | Free (self-hosted) | Limited free tier |
-| Customization | Full control | Limited |
+| Feature          | Woodpecker         | GitHub Actions    |
+| ---------------- | ------------------ | ----------------- |
+| Self-Hosted      | Yes                | Optional          |
+| Platform Lock-in | No                 | GitHub only       |
+| Cost             | Free (self-hosted) | Limited free tier |
+| Customization    | Full control       | Limited           |
 
 ### When to Choose Woodpecker
 
@@ -385,7 +385,7 @@ steps:
   test:
     image: node:20-alpine
     commands:
-      - set -e  # Exit on error
+      - set -e # Exit on error
       - npm test
 ```
 
@@ -398,7 +398,7 @@ steps:
 ```yaml
 woodpecker-agent:
   image: woodpeckerci/woodpecker-agent:latest
-  privileged: true  # Use with caution
+  privileged: true # Use with caution
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
 ```
@@ -427,7 +427,7 @@ steps:
       - npm ci
       - npm test
 
-depends_on: []  # Run in parallel
+depends_on: [] # Run in parallel
 ```
 
 ### 2. Use Pipeline Templates
@@ -494,4 +494,3 @@ The future of CI/CD doesn't have to be complicated. Sometimes, the best tool is 
 - [Woodpecker CI GitHub Repository](https://github.com/woodpecker-ci/woodpecker)
 - [Woodpecker CI Plugins](https://woodpecker-ci.org/plugins/)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
-

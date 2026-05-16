@@ -21,6 +21,7 @@ In this blog, I'll be sharing:
 ## My Background
 
 I'm passionate about:
+
 - Building scalable api's
 - Full-stack web development
 - JavaScript/Typescript and modern frameworks
@@ -30,6 +31,7 @@ I'm passionate about:
 ## Get in Touch
 
 Feel free to connect with me:
+
 - [LinkedIn](https://linkedin.com/in/fernando-nog)
 
 Thanks for stopping by, and I hope you find the content here useful! 🚀

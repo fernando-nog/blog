@@ -122,16 +122,19 @@ sdk install java 17.0.8-tem
 ### Switching Between Java Versions
 
 **Temporarily** (for current session only):
+
 ```bash
 sdk use java 17.0.8-tem
 ```
 
 **Permanently** (set as default):
+
 ```bash
 sdk default java 17.0.8-tem
 ```
 
 Check your current Java version:
+
 ```bash
 java -version
 ```
@@ -355,6 +358,7 @@ curl -s "https://get.sdkman.io" | bash
 SDKMAN transforms the often painful process of managing multiple development tool versions into a smooth, automated experience. Whether you're a Java developer juggling different projects or a DevOps engineer managing multiple environments, SDKMAN will save you countless hours and headaches.
 
 The key benefits are clear:
+
 - **Simplified installation** of development tools
 - **Easy version switching** between projects
 - **Automatic environment management** with `.sdkmanrc` files
@@ -368,4 +372,3 @@ Start with installing SDKMAN and managing your Java versions. Once you see how e
 - [SDKMAN Official Website](https://sdkman.io/)
 - [SDKMAN Installation Guide](https://sdkman.io/install)
 - [SDKMAN Usage Guide](https://sdkman.io/usage)
-

@@ -10,46 +10,44 @@ import PropTypes from "prop-types"
 import * as React from "react"
 import { Helmet } from "react-helmet"
 
-const Seo = ({ 
-  description, 
-  lang, 
-  meta, 
-  title, 
-  image, 
+const Seo = ({
+  description,
+  lang,
+  meta,
+  title,
+  image,
   article = false,
   canonicalUrl,
-  noindex = false 
+  noindex = false,
 }) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            siteUrl
-            image
-            author {
-              name
-            }
-            social {
-              linkedin
-              stackoverflow
-              github
-            }
+  const { site } = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+          siteUrl
+          image
+          author {
+            name
+          }
+          social {
+            linkedin
+            stackoverflow
+            github
           }
         }
       }
-    `
-  )
+    }
+  `)
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
-  const siteUrl = site.siteMetadata?.siteUrl || ''
+  const siteUrl = site.siteMetadata?.siteUrl || ""
   const defaultImage = image || site.siteMetadata?.image
   const imageUrl = defaultImage ? `${siteUrl}${defaultImage}` : null
   const pageUrl = canonicalUrl || `${siteUrl}`
-  const author = site.siteMetadata?.author?.name || ''
+  const author = site.siteMetadata?.author?.name || ""
 
   return (
     <Helmet
@@ -60,7 +58,7 @@ const Seo = ({
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
       link={[
         {
-          rel: 'canonical',
+          rel: "canonical",
           href: pageUrl,
         },
       ]}
@@ -92,7 +90,7 @@ const Seo = ({
         },
         {
           property: `og:locale`,
-          content: lang === 'en' ? 'en_US' : lang,
+          content: lang === "en" ? "en_US" : lang,
         },
         // Twitter Card tags
         {

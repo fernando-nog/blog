@@ -136,13 +136,11 @@ module.exports = {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
         // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          'G-W3420HP98X'
-        ],
+        trackingIds: ["G-W3420HP98X"],
         // This object gets passed directly to the gtag config command
         // This config will be shared across all trackingIds
         gtagConfig: {
-          optimize_id: 'OPT_CONTAINER_ID',
+          optimize_id: "OPT_CONTAINER_ID",
           anonymize_ip: true,
           cookie_expires: 0,
         },
@@ -153,7 +151,7 @@ module.exports = {
           // Setting this parameter is also optional
           respectDNT: true,
           // Avoids sending pageview hits from custom paths
-          exclude: ['/preview/**', '/do-not-track/me/too/'],
+          exclude: ["/preview/**", "/do-not-track/me/too/"],
         },
       },
     },
@@ -164,9 +162,8 @@ module.exports = {
       options: {
         host: `https://fernando-nog.netlify.app/`,
         sitemap: `https://fernando-nog.netlify.app/sitemap-index.xml`,
-        policy: [{ userAgent: '*', allow: '/' }],
+        policy: [{ userAgent: "*", allow: "/" }],
       },
     },
-
   ],
 }

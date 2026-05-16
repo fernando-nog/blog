@@ -2,7 +2,17 @@
 title: "npx vs npm vs Yarn: Which Package Manager Should You Choose for JavaScript and TypeScript?"
 date: "2025-09-15"
 description: "Master JavaScript and TypeScript package management by understanding the key differences between npm, npx, and Yarn. Learn when to use each tool and discover best practices for modern development workflows."
-tags: ["npm", "npx", "yarn", "javascript", "typescript", "nodejs", "package-management", "development"]
+tags:
+  [
+    "npm",
+    "npx",
+    "yarn",
+    "javascript",
+    "typescript",
+    "nodejs",
+    "package-management",
+    "development",
+  ]
 ---
 
 Picture this: you're starting a new JavaScript or TypeScript project and need to install dependencies, run a build tool, and execute a one-time script. You open your terminal and pause—should you use `npm install`, `npx create-react-app`, or `yarn add`? If you've ever felt confused about when to use which package management tool, you're not alone.
@@ -60,6 +70,7 @@ npm run build
 ### When to Use npm
 
 npm is your go-to tool for:
+
 - **Project initialization**: Setting up new Node.js projects
 - **Dependency management**: Installing and managing project libraries
 - **Script automation**: Running build tools, tests, and custom workflows
@@ -125,6 +136,7 @@ npx github:user/repo-name
 ### When to Use npx
 
 npx is perfect for:
+
 - **Project scaffolding**: Creating new projects with tools like `create-react-app`, `create-next-app`
 - **One-time utilities**: Running tools you don't need permanently installed
 - **Testing packages**: Trying out CLI tools before deciding to install them
@@ -194,6 +206,7 @@ yarn dlx create-react-app my-app
 ### When to Use Yarn
 
 Yarn excels in:
+
 - **Team projects**: Where deterministic builds and consistent environments are crucial
 - **Large applications**: With many dependencies that benefit from parallel installation
 - **Monorepo setups**: Projects requiring workspace management
@@ -201,27 +214,28 @@ Yarn excels in:
 
 ## Comprehensive Comparison: npm vs npx vs Yarn
 
-| Feature | npm | npx | Yarn |
-|---------|-----|-----|------|
-| **Primary Purpose** | Package management | Package execution | Package management |
-| **Installation Method** | Built into Node.js | Bundled with npm 5.2+ | Separate installation required |
-| **Installation Approach** | Sequential | Temporary | Parallel |
-| **Lockfile** | `package-lock.json` | N/A | `yarn.lock` |
-| **Offline Support** | Limited | No | Full support |
-| **Cache Management** | Basic | Temporary | Advanced with offline mode |
-| **Security Features** | Standard | Inherited from npm | Enhanced with checksums |
-| **Global Package Management** | `npm install -g` | Execute without installing | `yarn global add` |
-| **Script Running** | `npm run script` | N/A | `yarn script` |
-| **Monorepo Support** | Basic with workspaces | N/A | Advanced workspaces |
-| **Package Execution** | Requires installation | Direct execution | `yarn dlx` (v2+) |
-| **Performance** | Good (improved over time) | Fast execution | Often faster installs |
-| **Ecosystem Compatibility** | Universal | npm ecosystem | npm registry compatible |
+| Feature                       | npm                       | npx                        | Yarn                           |
+| ----------------------------- | ------------------------- | -------------------------- | ------------------------------ |
+| **Primary Purpose**           | Package management        | Package execution          | Package management             |
+| **Installation Method**       | Built into Node.js        | Bundled with npm 5.2+      | Separate installation required |
+| **Installation Approach**     | Sequential                | Temporary                  | Parallel                       |
+| **Lockfile**                  | `package-lock.json`       | N/A                        | `yarn.lock`                    |
+| **Offline Support**           | Limited                   | No                         | Full support                   |
+| **Cache Management**          | Basic                     | Temporary                  | Advanced with offline mode     |
+| **Security Features**         | Standard                  | Inherited from npm         | Enhanced with checksums        |
+| **Global Package Management** | `npm install -g`          | Execute without installing | `yarn global add`              |
+| **Script Running**            | `npm run script`          | N/A                        | `yarn script`                  |
+| **Monorepo Support**          | Basic with workspaces     | N/A                        | Advanced workspaces            |
+| **Package Execution**         | Requires installation     | Direct execution           | `yarn dlx` (v2+)               |
+| **Performance**               | Good (improved over time) | Fast execution             | Often faster installs          |
+| **Ecosystem Compatibility**   | Universal                 | npm ecosystem              | npm registry compatible        |
 
 ## Practical Development Scenarios
 
 ### Starting a New Project
 
 **JavaScript project with npm + npx:**
+
 ```bash
 # Create project structure
 npx create-react-app my-project
@@ -235,6 +249,7 @@ npm install --save-dev prettier eslint
 ```
 
 **TypeScript project with npm + npx:**
+
 ```bash
 # Create TypeScript React project
 npx create-react-app my-ts-project --template typescript
@@ -249,6 +264,7 @@ npm install --save-dev prettier eslint @typescript-eslint/parser
 ```
 
 **Using Yarn for TypeScript:**
+
 ```bash
 # Create TypeScript project
 yarn create react-app my-ts-project --template typescript
@@ -264,6 +280,7 @@ yarn add --dev prettier eslint @typescript-eslint/parser @types/axios
 ### Daily Development Workflow
 
 **Package management tasks:**
+
 ```bash
 # npm approach
 npm install new-package
@@ -277,6 +294,7 @@ yarn test
 ```
 
 **One-time executions:**
+
 ```bash
 # Use npx for temporary tools
 npx lighthouse https://example.com
@@ -290,6 +308,7 @@ yarn dlx bundle-analyzer
 ### CI/CD Pipeline Considerations
 
 **npm in CI:**
+
 ```bash
 # Use npm ci for faster, reliable installs
 npm ci
@@ -298,6 +317,7 @@ npm test
 ```
 
 **Yarn in CI:**
+
 ```bash
 # Use yarn install --frozen-lockfile
 yarn install --frozen-lockfile

@@ -25,23 +25,23 @@ Here's the comprehensive compatibility matrix for Gradle, Java, and Spring Boot 
 
 ### Spring Boot Compatibility Matrix
 
-| Spring Boot Version | Compatible Java Versions | Compatible Gradle Versions | Status |
-|---------------------|-------------------------|----------------------------|---------|
-| **3.5.x** | 17 to 25 | 7.6.4+ or 8.4+ | **Latest** |
-| **3.4.x** | 17 to 25 | 7.6.4+ or 8.4+ | Current |
-| **3.3.x** | 17 to 25 | 7.6.4+ or 8.4+ | Current |
-| **3.0.x - 3.2.x** | 17 to 21 | 7.5+ or 8.x | Maintenance |
-| **2.7.x** | 8 to 21 | 6.8, 6.9, 7.x, 8.x | End of Life |
+| Spring Boot Version | Compatible Java Versions | Compatible Gradle Versions | Status      |
+| ------------------- | ------------------------ | -------------------------- | ----------- |
+| **3.5.x**           | 17 to 25                 | 7.6.4+ or 8.4+             | **Latest**  |
+| **3.4.x**           | 17 to 25                 | 7.6.4+ or 8.4+             | Current     |
+| **3.3.x**           | 17 to 25                 | 7.6.4+ or 8.4+             | Current     |
+| **3.0.x - 3.2.x**   | 17 to 21                 | 7.5+ or 8.x                | Maintenance |
+| **2.7.x**           | 8 to 21                  | 6.8, 6.9, 7.x, 8.x         | End of Life |
 
 ### Gradle Java Compatibility
 
 | Gradle Version | Compatible Java Versions | Recommended Java |
-|----------------|-------------------------|------------------|
-| **9.1.0** | 17 to 25 | 21 |
-| **8.10** | 17 to 24 | 21 |
-| **8.5** | 17 to 23 | 21 |
-| **8.0** | 17 to 21 | 21 |
-| **7.6** | 11 to 21 | 17 |
+| -------------- | ------------------------ | ---------------- |
+| **9.1.0**      | 17 to 25                 | 21               |
+| **8.10**       | 17 to 24                 | 21               |
+| **8.5**        | 17 to 23                 | 21               |
+| **8.0**        | 17 to 21                 | 21               |
+| **7.6**        | 11 to 21                 | 17               |
 
 ## Recommended Combinations for 2025
 
@@ -56,6 +56,7 @@ Gradle: 8.10
 ```
 
 **Why this combination?**
+
 - Spring Boot 3.5.x is the latest stable version
 - Java 21 is the current LTS version with excellent performance
 - Gradle 8.10 provides the best balance of features and stability
@@ -69,6 +70,7 @@ Gradle: 8.5
 ```
 
 **Why this combination?**
+
 - Java 17 is still widely supported in enterprise environments
 - Spring Boot 3.4.x offers stability and proven features
 - Gradle 8.5 is battle-tested in production environments
@@ -82,6 +84,7 @@ Gradle: 9.1.0
 ```
 
 **Why this combination?**
+
 - Access to the latest Java features
 - Latest Gradle performance improvements
 - Early access to Spring Boot innovations
@@ -93,6 +96,7 @@ Let's see how to configure these combinations in practice:
 ### 1. Spring Boot 3.5.x with Java 21 and Gradle 8.10
 
 **`build.gradle`**
+
 ```gradle
 plugins {
     id 'java'
@@ -126,6 +130,7 @@ tasks.named('test') {
 ```
 
 **`gradle/wrapper/gradle-wrapper.properties`**
+
 ```properties
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.10-bin.zip
 ```
@@ -133,6 +138,7 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-8.10-bin.zip
 ### 2. Spring Boot 3.4.x with Java 17 and Gradle 8.5
 
 **`build.gradle`**
+
 ```gradle
 plugins {
     id 'java'
@@ -166,6 +172,7 @@ tasks.named('test') {
 ```
 
 **`gradle/wrapper/gradle-wrapper.properties`**
+
 ```properties
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.5-bin.zip
 ```
@@ -175,6 +182,7 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-8.5-bin.zip
 Here are some useful commands to verify your current versions:
 
 ### Check Java Version
+
 ```bash
 $ java --version
 openjdk 21.0.1 2023-10-17
@@ -183,6 +191,7 @@ OpenJDK 64-Bit Server VM (build 21.0.1+12-LTS, mixed mode, sharing)
 ```
 
 ### Check Gradle Version
+
 ```bash
 $ ./gradlew --version
 
@@ -199,6 +208,7 @@ OS:           Mac OS X 14.6.0 x86_64
 ```
 
 ### Check Spring Boot Version
+
 ```bash
 $ ./gradlew dependencies --configuration compileClasspath | grep spring-boot-starter
 +--- org.springframework.boot:spring-boot-starter:3.5.0
@@ -207,15 +217,19 @@ $ ./gradlew dependencies --configuration compileClasspath | grep spring-boot-sta
 ## Common Compatibility Issues and Solutions
 
 ### Issue 1: Gradle Version Too Old
+
 **Error**: `Unsupported Gradle version`
 **Solution**: Update your Gradle wrapper:
+
 ```bash
 $ ./gradlew wrapper --gradle-version 8.10
 ```
 
 ### Issue 2: Java Version Mismatch
+
 **Error**: `Unsupported Java version`
 **Solution**: Set the correct Java toolchain in `build.gradle`:
+
 ```gradle
 java {
     toolchain {
@@ -225,8 +239,10 @@ java {
 ```
 
 ### Issue 3: Spring Boot Plugin Version Conflict
+
 **Error**: `Plugin with id 'org.springframework.boot' not found`
 **Solution**: Ensure you're using a compatible Spring Boot plugin version:
+
 ```gradle
 plugins {
     id 'org.springframework.boot' version '3.5.0'
@@ -257,13 +273,17 @@ When upgrading Java versions:
 ## Best Practices for Version Management
 
 ### 1. Use Gradle Wrapper
+
 Always use the Gradle wrapper to ensure consistent builds across environments:
+
 ```bash
 $ ./gradlew build
 ```
 
 ### 2. Pin Dependency Versions
+
 Use the Spring Boot dependency management plugin to avoid version conflicts:
+
 ```gradle
 plugins {
     id 'io.spring.dependency-management' version '1.1.6'
@@ -271,7 +291,9 @@ plugins {
 ```
 
 ### 3. Use Java Toolchain
+
 Specify Java versions using the toolchain feature:
+
 ```gradle
 java {
     toolchain {
@@ -281,7 +303,9 @@ java {
 ```
 
 ### 4. Regular Updates
+
 Keep your dependencies updated regularly, but test thoroughly:
+
 ```bash
 $ ./gradlew dependencyUpdates
 ```

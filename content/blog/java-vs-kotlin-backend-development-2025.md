@@ -74,7 +74,7 @@ data class User(val name: String, val email: String, val age: Int)
 
 // Null safety built into the type system
 fun processUser(user: User?) {
-    user?.let { 
+    user?.let {
         println("Processing user: ${it.name}")
     }
 }
@@ -111,7 +111,7 @@ Kotlin's coroutines provide a more intuitive way to handle async operations:
 suspend fun fetchUserData(): User {
     val user = async { fetchUser() }
     val profile = async { fetchProfile() }
-    
+
     return User(
         name = user.await().name,
         profile = profile.await()
@@ -142,6 +142,7 @@ This is where Java and Kotlin diverge significantly. While both run on the JVM, 
 Java's concurrency model has evolved from traditional threads to more modern approaches:
 
 #### **Traditional Threading (Pre-Java 21)**
+
 ```java
 // Traditional Java threading - complex and error-prone
 ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -163,6 +164,7 @@ future.thenAccept(result -> {
 ```
 
 #### **Virtual Threads (Java 21+)**
+
 Java 21 introduced virtual threads, which are much more efficient:
 
 ```java
@@ -180,7 +182,7 @@ try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
 try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
     var task1 = scope.fork(() -> fetchUserData());
     var task2 = scope.fork(() -> fetchUserProfile());
-    
+
     scope.join();
     var user = task1.result();
     var profile = task2.result();
@@ -192,6 +194,7 @@ try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
 Kotlin's coroutines provide a much more intuitive approach to async programming:
 
 #### **Basic Coroutines**
+
 ```kotlin
 // Simple coroutine - much cleaner syntax
 suspend fun fetchUserData(): User {
@@ -211,15 +214,16 @@ suspend fun processUser(): UserProfile {
 ```
 
 #### **Concurrent Operations**
+
 ```kotlin
 // Concurrent operations - much more readable
 suspend fun processUserConcurrently(): UserProfile {
     val userDeferred = async { fetchUserData() }
     val profileDeferred = async { fetchProfile() }
-    
+
     val user = userDeferred.await()
     val profile = profileDeferred.await()
-    
+
     return UserProfile(user, profile)
 }
 
@@ -229,12 +233,13 @@ suspend fun processUserConcurrently(): UserProfile {
         async { fetchUserData() },
         async { fetchProfile() }
     ).awaitAll()
-    
+
     return UserProfile(user, profile)
 }
 ```
 
 #### **Error Handling in Coroutines**
+
 ```kotlin
 // Built-in error handling with coroutines
 suspend fun robustDataFetch(): Result<User> {
@@ -265,10 +270,12 @@ suspend fun fetchWithRetry(): User {
 **Kotlin wins decisively** for async development. Here's why:
 
 #### **1. Learning Curve**
+
 - **Java**: Requires understanding of `CompletableFuture`, `ExecutorService`, thread pools, and exception handling
 - **Kotlin**: Coroutines feel like sequential code with `suspend` keywords
 
 #### **2. Error Handling**
+
 ```java
 // Java - complex error handling
 CompletableFuture<String> future = CompletableFuture
@@ -295,6 +302,7 @@ suspend fun fetchData(): String {
 ```
 
 #### **3. Resource Management**
+
 ```java
 // Java - manual resource management
 ExecutorService executor = Executors.newFixedThreadPool(10);
@@ -317,6 +325,7 @@ suspend fun processData() {
 ```
 
 #### **4. Testing Async Code**
+
 ```java
 // Java - complex testing setup
 @Test
@@ -347,11 +356,13 @@ Both approaches have similar performance characteristics:
 ### **When to Use Each Approach**
 
 #### **Choose Java Virtual Threads When:**
+
 - You're already invested in Java ecosystem
 - You need maximum compatibility with existing Java libraries
 - Your team is more familiar with traditional threading concepts
 
 #### **Choose Kotlin Coroutines When:**
+
 - You want cleaner, more maintainable async code
 - You're building new applications
 - You value developer productivity and code readability
@@ -372,12 +383,14 @@ For most backend applications, performance differences are negligible compared t
 ## Ecosystem and Framework Support
 
 ### **Java Ecosystem**
+
 - **Spring Boot**: Mature, feature-rich, excellent documentation
 - **Quarkus**: Fast startup, cloud-native focused
 - **Micronaut**: Compile-time dependency injection
 - **Jakarta EE**: Enterprise standards
 
 ### **Kotlin Ecosystem**
+
 - **Spring Boot**: Full Kotlin support with DSLs
 - **Ktor**: Modern, lightweight framework by JetBrains
 - **Micronaut**: Excellent Kotlin support
@@ -415,6 +428,7 @@ After working with both languages extensively, here's my take:
 4. **Gradual Adoption**: You can always fall back to Java libraries when needed
 
 **However, stick with Java if:**
+
 - You're maintaining large existing systems
 - Your team has strong Java expertise and limited learning bandwidth
 - You're in a conservative enterprise environment
@@ -433,12 +447,12 @@ If you're leaning toward Kotlin, here's how to get started:
 @RestController
 @RequestMapping("/api/users")
 class UserController(private val userService: UserService) {
-    
+
     @GetMapping
     suspend fun getAllUsers(): List<UserDto> {
         return userService.findAllUsers()
     }
-    
+
     @PostMapping
     suspend fun createUser(@RequestBody userDto: CreateUserDto): UserDto {
         return userService.createUser(userDto)

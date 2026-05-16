@@ -77,9 +77,7 @@ This limits the container's writable layer to 1GB.
 ```json
 {
   "storage-driver": "overlay2",
-  "storage-opts": [
-    "overlay2.size=10G"
-  ]
+  "storage-opts": ["overlay2.size=10G"]
 }
 ```
 
@@ -92,17 +90,17 @@ For multi-container applications, Docker Compose provides better organization an
 **Create `deploy` and `resources` segments in your service configuration:**
 
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   web:
     image: nginx
     deploy:
       resources:
         limits:
-          cpus: '0.50'
+          cpus: "0.50"
           memory: 512M
         reservations:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 128M
     ports:
       - "80:80"
@@ -124,6 +122,7 @@ volumes:
 In this configuration, the service is limited to half a CPU and 512MB of memory, with reservations of a quarter CPU and 128MB memory. The container's writable layer is limited to 1GB, and the volume is constrained to 2GB.
 
 **Volume configuration breakdown:**
+
 - `driver: local` - Uses the local volume driver
 - `type: none` - Creates a bind mount (not a managed volume)
 - `o: bind,size=2G` - Mount options: bind mount with 2GB size limit

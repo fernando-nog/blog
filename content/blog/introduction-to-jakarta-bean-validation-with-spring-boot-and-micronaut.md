@@ -2,7 +2,16 @@
 title: "Introduction to Jakarta Bean Validation: Practical Examples with Spring Boot and Micronaut"
 date: "2026-03-20"
 description: "Learn how Jakarta Bean Validation works, which constraints matter most, and how to use it effectively in Spring Boot and Micronaut without turning validation into misplaced business logic."
-tags: ["java", "jakarta", "bean-validation", "spring-boot", "micronaut", "backend-development", "validation"]
+tags:
+  [
+    "java",
+    "jakarta",
+    "bean-validation",
+    "spring-boot",
+    "micronaut",
+    "backend-development",
+    "validation",
+  ]
 ---
 
 Picture this: you expose a simple REST endpoint to create a user, and within the first day someone sends an empty name, an invalid email, a negative age, and a 4,000-character biography. None of this is surprising. What is surprising is how many Java applications still mix these basic guardrails into controllers, services, random `if` statements, and duplicated utility methods.
@@ -14,6 +23,7 @@ Jakarta Bean Validation exists to solve exactly that class of problem. It gives 
 Jakarta Bean Validation is the standard validation API in the Jakarta ecosystem. According to the Jakarta EE tutorial, it provides a facility for validating objects, object members, methods, and constructors.
 
 In practice, that means you can declare rules with annotations such as:
+
 - `@NotNull`
 - `@NotBlank`
 - `@Size`
@@ -31,6 +41,7 @@ That does not remove all validation code from your application. It removes the r
 ## Why It Matters
 
 Bean Validation is useful because it improves three things at once:
+
 - readability: the rules are visible where the data is defined
 - consistency: the same object can be validated in controllers, services, tests, and persistence workflows
 - framework integration: modern Java frameworks can trigger validation automatically
@@ -41,19 +52,20 @@ This is especially useful in backend APIs, where you want invalid input rejected
 
 You do not need to memorize the full list of annotations on day one. Most teams repeatedly use a small subset.
 
-| Constraint | Typical use |
-|---|---|
-| `@NotNull` | value must exist |
-| `@NotBlank` | string must contain non-whitespace text |
-| `@NotEmpty` | string, collection, map, or array must not be empty |
-| `@Size` | string length or collection size bounds |
-| `@Min` / `@Max` | numeric bounds |
-| `@Positive` / `@PositiveOrZero` | positive numeric values |
-| `@Email` | email-like format |
-| `@Pattern` | regex-based validation |
-| `@Past` / `@Future` | temporal rules |
+| Constraint                      | Typical use                                         |
+| ------------------------------- | --------------------------------------------------- |
+| `@NotNull`                      | value must exist                                    |
+| `@NotBlank`                     | string must contain non-whitespace text             |
+| `@NotEmpty`                     | string, collection, map, or array must not be empty |
+| `@Size`                         | string length or collection size bounds             |
+| `@Min` / `@Max`                 | numeric bounds                                      |
+| `@Positive` / `@PositiveOrZero` | positive numeric values                             |
+| `@Email`                        | email-like format                                   |
+| `@Pattern`                      | regex-based validation                              |
+| `@Past` / `@Future`             | temporal rules                                      |
 
 The distinction between `@NotNull`, `@NotEmpty`, and `@NotBlank` is worth learning early:
+
 - `@NotNull` only rejects `null`
 - `@NotEmpty` rejects `null` and empty values
 - `@NotBlank` is for strings and also rejects whitespace-only values
@@ -101,6 +113,7 @@ This is one of the most common points of confusion.
 `@Validated` is Spring-specific and is commonly used to enable method validation on Spring beans.
 
 A practical mental model:
+
 - use `@Valid` on request bodies, nested objects, and collections of objects
 - use `@Validated` on Spring service classes when you want method parameter or return value validation
 
@@ -166,6 +179,7 @@ Spring Boot documents that method validation is automatically enabled when a Bea
 Current Spring Framework documentation also calls out an easy mistake: if you put class-level `@Validated` on a controller, validation may go through an AOP proxy instead of using Spring MVC's newer built-in method validation support. For Spring MVC controllers, that is often unnecessary now.
 
 Practical rule:
+
 - controllers: prefer `@Valid` on request objects and direct parameter constraints when appropriate
 - services: use `@Validated` for method validation
 
@@ -288,6 +302,7 @@ That distinction matters in real projects.
 ## When You Should Use Bean Validation
 
 Jakarta Bean Validation is a strong fit when:
+
 - you are validating DTOs coming into HTTP endpoints
 - you want method-level parameter checks on service boundaries
 - you need simple, declarative field rules
@@ -295,6 +310,7 @@ Jakarta Bean Validation is a strong fit when:
 - you want framework-generated error handling to stay consistent
 
 It is especially effective for structural rules:
+
 - required fields
 - string length
 - numeric ranges
@@ -308,6 +324,7 @@ If your rule is stable, deterministic, and local to the object or method contrac
 This is the part many teams get wrong. Bean Validation is not a substitute for all validation.
 
 Avoid putting these kinds of rules directly into Bean Validation annotations:
+
 - heavy database lookups
 - cross-service network calls
 - business workflows with side effects
@@ -315,6 +332,7 @@ Avoid putting these kinds of rules directly into Bean Validation annotations:
 - highly contextual rules that depend on the current user, feature flags, or external state
 
 Examples:
+
 - "email must be unique" is usually not a Bean Validation concern by itself
 - "user can only approve invoices for their department" is not a Bean Validation concern
 - "you cannot cancel an order after shipping started" is domain logic, not DTO validation
@@ -322,6 +340,7 @@ Examples:
 Those belong in domain services, policies, or persistence constraints.
 
 A good rule of thumb:
+
 - Bean Validation for shape and contract
 - domain logic for business meaning
 
@@ -340,13 +359,13 @@ That last point matters. Validation annotations improve developer ergonomics, bu
 
 ## Spring Boot vs Micronaut at a Glance
 
-| Topic | Spring Boot | Micronaut |
-|---|---|---|
-| Basic annotations | `jakarta.validation.*` | `jakarta.validation.*` |
-| Common setup | `spring-boot-starter-validation` | `micronaut-validation` + processor |
-| Method validation | typically `@Validated` on bean | constraint annotations on bean methods |
-| Manual validation | inject `Validator` | inject `Validator` |
-| Message integration | integrates with `MessageSource` | supported, but different infrastructure |
+| Topic                | Spring Boot                                               | Micronaut                                              |
+| -------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| Basic annotations    | `jakarta.validation.*`                                    | `jakarta.validation.*`                                 |
+| Common setup         | `spring-boot-starter-validation`                          | `micronaut-validation` + processor                     |
+| Method validation    | typically `@Validated` on bean                            | constraint annotations on bean methods                 |
+| Manual validation    | inject `Validator`                                        | inject `Validator`                                     |
+| Message integration  | integrates with `MessageSource`                           | supported, but different infrastructure                |
 | Full spec compliance | usually via standard provider such as Hibernate Validator | default validator is lighter, not fully spec-compliant |
 
 Neither approach is universally better. Spring Boot gives you familiar integration with a widely used validator stack. Micronaut gives you a more compile-time-oriented model that fits well when startup time, native image support, and reflection reduction matter.

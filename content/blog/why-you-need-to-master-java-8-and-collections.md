@@ -36,14 +36,14 @@ If you don't master Java 8, you're essentially limiting your ability to read, wr
 
 Java 8 fundamentally changed how we think about data processing. Here's a quick comparison:
 
-| Concept | Before Java 8 | With Java 8 |
-|---------|---------------|-------------|
-| **Iteration** | for-loops | streams |
-| **Filtering** | nested ifs | filter() |
-| **Transformation** | manual loops | map() |
-| **Null handling** | if != null | Optional |
-| **Sorting** | Comparator boilerplate | Method references |
-| **Aggregation** | manual accumulation | reduce() / collect() |
+| Concept            | Before Java 8          | With Java 8          |
+| ------------------ | ---------------------- | -------------------- |
+| **Iteration**      | for-loops              | streams              |
+| **Filtering**      | nested ifs             | filter()             |
+| **Transformation** | manual loops           | map()                |
+| **Null handling**  | if != null             | Optional             |
+| **Sorting**        | Comparator boilerplate | Method references    |
+| **Aggregation**    | manual accumulation    | reduce() / collect() |
 
 ### Understanding the Stream Pipeline
 
@@ -81,6 +81,7 @@ These are the features that made Java relevant again in the modern programming l
 Lambdas are the gateway to functional programming in Java. They allow you to write cleaner, more expressive code.
 
 **Before Java 8:**
+
 ```java
 List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
 Collections.sort(names, new Comparator<String>() {
@@ -92,6 +93,7 @@ Collections.sort(names, new Comparator<String>() {
 ```
 
 **With Java 8:**
+
 ```java
 List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
 names.sort((s1, s2) -> s1.compareTo(s2));
@@ -138,6 +140,7 @@ The stream version is more readable, less error-prone, and can be easily paralle
 Collectors are one of the most underutilized features of Java 8. They provide powerful ways to aggregate and transform data.
 
 **Grouping data:**
+
 ```java
 // Group employees by department
 Map<String, List<Employee>> byDepartment = employees.stream()
@@ -152,6 +155,7 @@ Map<String, Double> avgSalaryByDept = employees.stream()
 ```
 
 **Partitioning data:**
+
 ```java
 // Split employees into two groups: high earners and others
 Map<Boolean, List<Employee>> partitioned = employees.stream()
@@ -168,6 +172,7 @@ These operations would require significant imperative code. With Collectors, the
 `Optional` is Java's way of handling the absence of values without null checks everywhere.
 
 **Before Java 8:**
+
 ```java
 public String getUserCity(Long userId) {
     User user = userRepository.findById(userId);
@@ -182,6 +187,7 @@ public String getUserCity(Long userId) {
 ```
 
 **With Java 8:**
+
 ```java
 public String getUserCity(Long userId) {
     return userRepository.findById(userId)
@@ -196,6 +202,7 @@ Much cleaner, and it explicitly communicates that the value might be absent.
 #### Optional Best Practices and Anti-Patterns
 
 **❌ Anti-Pattern #1: Calling get() without checking**
+
 ```java
 // Dangerous - throws NoSuchElementException if empty
 Optional<User> userOpt = findUser(id);
@@ -203,6 +210,7 @@ User user = userOpt.get(); // DON'T DO THIS
 ```
 
 **✅ Better approaches:**
+
 ```java
 // Option 1: Provide a default
 User user = userOpt.orElse(defaultUser);
@@ -215,12 +223,14 @@ userOpt.ifPresent(user -> sendEmail(user));
 ```
 
 **❌ Anti-Pattern #2: Using Optional as method parameters**
+
 ```java
 // Bad - adds unnecessary complexity
 public void processUser(Optional<User> user) { }
 ```
 
 **✅ Instead, use overloading or null:**
+
 ```java
 // Good - clear and simple
 public void processUser(User user) { }
@@ -228,6 +238,7 @@ public void processUser() { } // no user case
 ```
 
 **❌ Anti-Pattern #3: Using Optional in fields**
+
 ```java
 // Bad - Optional isn't Serializable and adds overhead
 public class User {
@@ -236,11 +247,12 @@ public class User {
 ```
 
 **✅ Instead, just use null for absent fields:**
+
 ```java
 // Good - simple and efficient
 public class User {
     private String middleName; // can be null
-    
+
     public Optional<String> getMiddleName() {
         return Optional.ofNullable(middleName);
     }
@@ -248,6 +260,7 @@ public class User {
 ```
 
 **✅ Chaining Optional operations:**
+
 ```java
 // Complex optional chaining
 String result = userRepository.findById(userId)
@@ -264,16 +277,19 @@ String result = userRepository.findById(userId)
 Understanding **when to use which collection** is crucial:
 
 **List implementations:**
+
 - `ArrayList`: Fast random access, slow insertions/deletions
 - `LinkedList`: Fast insertions/deletions, slow random access
 - `CopyOnWriteArrayList`: Thread-safe, optimized for reads
 
 **Set implementations:**
+
 - `HashSet`: Fast lookups, no ordering
 - `LinkedHashSet`: Maintains insertion order
 - `TreeSet`: Sorted, slower than HashSet
 
 **Map implementations:**
+
 - `HashMap`: Fast lookups, no ordering
 - `LinkedHashMap`: Maintains insertion order
 - `TreeMap`: Sorted by keys
@@ -336,14 +352,14 @@ Understanding performance is a key part of mastering Collections and Streams. Le
 
 ### Time Complexity Matters
 
-| Operation | ArrayList | LinkedList | HashSet | TreeSet |
-|-----------|-----------|------------|---------|---------|
-| Add | O(1) | O(1) | O(1) | O(log n) |
-| Remove | O(n) | O(1)* | O(1) | O(log n) |
-| Get | O(1) | O(n) | N/A | N/A |
-| Contains | O(n) | O(n) | O(1) | O(log n) |
+| Operation | ArrayList | LinkedList | HashSet | TreeSet  |
+| --------- | --------- | ---------- | ------- | -------- |
+| Add       | O(1)      | O(1)       | O(1)    | O(log n) |
+| Remove    | O(n)      | O(1)\*     | O(1)    | O(log n) |
+| Get       | O(1)      | O(n)       | N/A     | N/A      |
+| Contains  | O(n)      | O(n)       | O(1)    | O(log n) |
 
-*O(1) if you have the node reference, O(n) if searching by value
+\*O(1) if you have the node reference, O(n) if searching by value
 
 ### Stream Performance Tips
 
@@ -395,25 +411,25 @@ Let me show you a complete example that combines Collections and Java 8 features
 
 ```java
 public class OrderProcessor {
-    
+
     public OrderSummary processOrders(List<Order> orders) {
         // Step 1: Filter out invalid orders (e.g., cancelled, refunded)
         // We collect to a list to avoid re-processing in subsequent operations
         List<Order> validOrders = orders.stream()
             .filter(Order::isValid)
             .collect(Collectors.toList());
-        
+
         // Step 2: Calculate total revenue across all valid orders
         // mapToDouble converts to primitive stream to avoid boxing overhead
         double totalRevenue = validOrders.stream()
             .mapToDouble(Order::getAmount)
             .sum();
-        
+
         // Step 3: Group orders by customer ID
         // Result: Map<CustomerId, List<Order>> for analyzing customer behavior
         Map<String, List<Order>> ordersByCustomer = validOrders.stream()
             .collect(Collectors.groupingBy(Order::getCustomerId));
-        
+
         // Step 4: Find top 5 customers by order count (not value)
         // We sort entries by list size in descending order
         List<String> topCustomers = ordersByCustomer.entrySet().stream()
@@ -424,7 +440,7 @@ public class OrderProcessor {
             .limit(5)                           // Take only top 5
             .map(Map.Entry::getKey)             // Extract customer IDs
             .collect(Collectors.toList());
-        
+
         // Step 5: Calculate average order value by product category
         // flatMap "flattens" nested lists: Order -> List<OrderItem> becomes Stream<OrderItem>
         Map<String, Double> avgByCategory = validOrders.stream()
@@ -433,7 +449,7 @@ public class OrderProcessor {
                 OrderItem::getCategory,                    // Group by category
                 Collectors.averagingDouble(OrderItem::getPrice)  // Calculate average price
             ));
-        
+
         // Step 6: Find which products appear together in orders
         // Useful for "frequently bought together" recommendations
         Map<String, Set<String>> productCombinations = validOrders.stream()
@@ -443,7 +459,7 @@ public class OrderProcessor {
                     .map(OrderItem::getProductId)
                     .collect(Collectors.toSet())
             ));
-        
+
         return OrderSummary.builder()
             .totalRevenue(totalRevenue)
             .topCustomers(topCustomers)
@@ -455,6 +471,7 @@ public class OrderProcessor {
 ```
 
 This example demonstrates:
+
 - **Stream filtering and mapping** for data transformation
 - **Collectors** for grouping and aggregating data
 - **Sorting with custom comparators** for ranking
@@ -751,6 +768,7 @@ Here are real questions I've been asked (and have asked others) in interviews:
 ### Question 1: "What's the difference between map() and flatMap()?"
 
 **Good answer:**
+
 - `map()` transforms each element to another element (1-to-1)
 - `flatMap()` transforms each element to a stream, then flattens all streams into one (1-to-many)
 
@@ -773,6 +791,7 @@ List<String> flattened = nested.stream()
 ### Question 2: "When would you use a LinkedList over an ArrayList?"
 
 **Good answer:**
+
 - **Rarely in practice.** ArrayList is almost always better.
 - Use LinkedList only when you're doing many insertions/deletions at the **beginning** or **middle** of the list
 - LinkedList uses more memory (each node has prev/next pointers)
@@ -783,6 +802,7 @@ List<String> flattened = nested.stream()
 ### Question 3: "How do parallel streams work? When would you use them?"
 
 **Good answer:**
+
 - Parallel streams use the ForkJoinPool to split work across multiple threads
 - Use them when:
   - You have a **large** dataset (> 10,000 elements typically)
@@ -794,6 +814,7 @@ List<String> flattened = nested.stream()
 ### Question 4: "What's the difference between Collection.stream().forEach() and Collection.forEach()?"
 
 **Good answer:**
+
 ```java
 list.forEach(System.out::println);           // Iterates in order
 list.stream().forEach(System.out::println);   // May not be in order (implementation-dependent)
@@ -806,6 +827,7 @@ list.parallelStream().forEachOrdered(System.out::println);  // Maintains order
 ### Question 5: "Implement a method that finds the second highest salary"
 
 **Good answer shows multiple approaches:**
+
 ```java
 // Approach 1: Sort and get second element
 Optional<Integer> secondHighest = salaries.stream()
@@ -921,6 +943,7 @@ List<String> result = stream.collect(
 ### Key Takeaway on Performance
 
 Don't optimize prematurely, but know these patterns:
+
 1. Use the right collection for your access pattern
 2. Use primitive streams for number-heavy operations
 3. Only use parallel streams for large, CPU-intensive tasks
@@ -967,6 +990,7 @@ Bookmark this section for quick lookups when coding:
 ### Stream Operations Cheat Sheet
 
 **Intermediate Operations** (lazy, return Stream)
+
 - `filter(predicate)` - Keep elements matching condition
 - `map(function)` - Transform each element
 - `flatMap(function)` - Transform and flatten nested structures
@@ -977,6 +1001,7 @@ Bookmark this section for quick lookups when coding:
 - `skip(n)` - Skip first n elements
 
 **Terminal Operations** (eager, trigger execution)
+
 - `collect(collector)` - Gather results into collection
 - `forEach(consumer)` - Execute action for each element
 - `reduce(identity, accumulator)` - Combine elements into single result
@@ -1071,14 +1096,14 @@ System.out::println        // Instance method on specific object
 
 ### Performance Quick Tips
 
-| Scenario | Use This | Not This |
-|----------|----------|----------|
-| Frequent lookups | `HashSet` / `HashMap` | `ArrayList` |
-| Numeric operations | `IntStream` / `LongStream` | `Stream<Integer>` |
-| Large dataset, CPU-bound | `parallelStream()` | `stream()` |
-| Small operations | Direct methods | Streams |
-| Known size | `new ArrayList<>(size)` | `new ArrayList<>()` |
-| Null-safe chaining | `Optional` | Nested `if != null` |
+| Scenario                 | Use This                   | Not This            |
+| ------------------------ | -------------------------- | ------------------- |
+| Frequent lookups         | `HashSet` / `HashMap`      | `ArrayList`         |
+| Numeric operations       | `IntStream` / `LongStream` | `Stream<Integer>`   |
+| Large dataset, CPU-bound | `parallelStream()`         | `stream()`          |
+| Small operations         | Direct methods             | Streams             |
+| Known size               | `new ArrayList<>(size)`    | `new ArrayList<>()` |
+| Null-safe chaining       | `Optional`                 | Nested `if != null` |
 
 ## My Personal Take
 
@@ -1097,11 +1122,13 @@ Okay, you've read all this. Now what? Here are **specific steps** you can take r
 ### This Week
 
 1. **Day 1-2: Refactor Existing Code**
+
    - Find a class with nested for-loops in your codebase
    - Rewrite one method using streams
    - Compare readability and run tests
 
 2. **Day 3-4: Fix a Performance Issue**
+
    - Find a method that uses `ArrayList.contains()` in a loop
    - Replace with `HashSet`
    - Measure the difference (add timing logs)
@@ -1113,11 +1140,13 @@ Okay, you've read all this. Now what? Here are **specific steps** you can take r
 ### This Month
 
 1. **Practice with Real Problems**
+
    - Solve 10 problems on LeetCode using streams
    - Categories: Array, HashMap, String manipulation
    - Try to solve each problem multiple ways
 
 2. **Study Quality Code**
+
    - Read the source code of `Collectors` class
    - Pick one method in Spring Framework and understand its stream usage
    - Review your team's PRs with focus on Collections usage
@@ -1130,6 +1159,7 @@ Okay, you've read all this. Now what? Here are **specific steps** you can take r
 ### Concrete Exercises to Try Right Now
 
 **Exercise 1:** Rewrite this imperative code
+
 ```java
 List<String> result = new ArrayList<>();
 for (Order order : orders) {
@@ -1144,6 +1174,7 @@ for (Order order : orders) {
 ```
 
 **Exercise 2:** What's wrong with this code? How would you fix it?
+
 ```java
 Optional<User> user = findUser(id);
 if (user.isPresent()) {
@@ -1153,6 +1184,7 @@ return null;
 ```
 
 **Exercise 3:** Optimize this for a list of 1 million items
+
 ```java
 boolean exists = list.contains(searchTerm);
 ```
@@ -1177,4 +1209,3 @@ Remember: Every senior developer you admire went through this same learning proc
 - [Java Collections Framework Overview](https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html)
 - [Effective Java by Joshua Bloch](https://www.oreilly.com/library/view/effective-java/9780134686097/)
 - [Java 8 in Action by Raoul-Gabriel Urma](https://www.manning.com/books/java-8-in-action)
-

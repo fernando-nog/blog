@@ -2,7 +2,15 @@
 title: "Java Concurrency Fundamentals: Understanding Threads, Locks, and the Problems They Solve"
 date: "2025-10-17"
 description: "Master the core concepts of Java multithreading, from threads and locks to thread pools and deadlocks. Essential foundation for modern concurrent programming."
-tags: ["java", "concurrency", "multithreading", "threads", "synchronization", "thread-pools"]
+tags:
+  [
+    "java",
+    "concurrency",
+    "multithreading",
+    "threads",
+    "synchronization",
+    "thread-pools",
+  ]
 ---
 
 Picture this: You've built a REST API to process customer orders. It works great in testing. You deploy to production, and... it can only handle **one request at a time**. While user A's order is processing, users B, C, and D are waiting. Your boss is not happy. Your users are not happy. And you're wondering: "Why is this so slow?"
@@ -20,6 +28,7 @@ Before we dive into code, let's understand what threads actually are and why the
 ### The Single-Threaded Problem
 
 Imagine you're running a restaurant with only one waiter. The waiter:
+
 1. Takes order from table 1
 2. Goes to kitchen
 3. Waits for food
@@ -40,7 +49,7 @@ public class SingleThreadedServer {
             // Only NOW can we handle the next request!
         }
     }
-    
+
     static Response processRequest(Request request) {
         // This takes 5 seconds
         callDatabase();        // 2 seconds
@@ -55,6 +64,7 @@ public class SingleThreadedServer {
 ### Enter Threads: Multiple Workers
 
 Now imagine your restaurant hires 10 waiters. Each can:
+
 - Take orders independently
 - Wait for different tables' food
 - Serve multiple customers simultaneously
@@ -66,13 +76,13 @@ public class MultiThreadedServer {
     public static void main(String[] args) {
         while (true) {
             Request request = waitForRequest();
-            
+
             // Spawn a new thread for each request
             new Thread(() -> {
                 Response response = processRequest(request);
                 sendResponse(response);
             }).start();
-            
+
             // Immediately ready for next request!
         }
     }
@@ -92,12 +102,14 @@ Let's clarify some terminology:
 - **Thread**: A unit of execution within a process
 
 One process can have multiple threads. They all share:
+
 - The same memory space
 - The same heap
 - The same code
 - The same open files
 
 But each thread has its own:
+
 - Execution path (can be at different lines of code)
 - Call stack
 - Local variables
@@ -113,40 +125,41 @@ Let's get our hands dirty with code. There are two main ways to create threads i
 ```java
 public class MyThread extends Thread {
     private String taskName;
-    
+
     public MyThread(String taskName) {
         this.taskName = taskName;
     }
-    
+
     @Override
     public void run() {
         System.out.println(taskName + " started on " + Thread.currentThread().getName());
-        
+
         // Simulate some work
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         System.out.println(taskName + " completed");
     }
-    
+
     public static void main(String[] args) {
         MyThread thread1 = new MyThread("Task 1");
         MyThread thread2 = new MyThread("Task 2");
         MyThread thread3 = new MyThread("Task 3");
-        
+
         thread1.start();  // NOT thread1.run()!
         thread2.start();
         thread3.start();
-        
+
         System.out.println("All threads started on " + Thread.currentThread().getName());
     }
 }
 ```
 
 **Output:**
+
 ```
 All threads started on main
 Task 1 started on Thread-0
@@ -158,6 +171,7 @@ Task 3 completed
 ```
 
 **Important**: Use `start()`, not `run()`!
+
 - `start()`: Creates a new thread and runs code in that thread
 - `run()`: Runs code in the current thread (defeats the purpose!)
 
@@ -166,29 +180,29 @@ Task 3 completed
 ```java
 public class MyTask implements Runnable {
     private String taskName;
-    
+
     public MyTask(String taskName) {
         this.taskName = taskName;
     }
-    
+
     @Override
     public void run() {
         System.out.println(taskName + " started on " + Thread.currentThread().getName());
-        
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
         System.out.println(taskName + " completed");
     }
-    
+
     public static void main(String[] args) {
         Thread thread1 = new Thread(new MyTask("Task 1"));
         Thread thread2 = new Thread(new MyTask("Task 2"));
         Thread thread3 = new Thread(new MyTask("Task 3"));
-        
+
         thread1.start();
         thread2.start();
         thread3.start();
@@ -197,6 +211,7 @@ public class MyTask implements Runnable {
 ```
 
 **Why prefer Runnable?**
+
 - Java doesn't support multiple inheritance; if you extend `Thread`, you can't extend anything else
 - Separates the task (what to do) from the thread (how to execute)
 - More flexible and composable
@@ -211,11 +226,11 @@ public class LambdaThreads {
         Thread thread1 = new Thread(() -> {
             System.out.println("Task 1 running on " + Thread.currentThread().getName());
         });
-        
+
         Thread thread2 = new Thread(() -> {
             System.out.println("Task 2 running on " + Thread.currentThread().getName());
         });
-        
+
         thread1.start();
         thread2.start();
     }
@@ -261,7 +276,7 @@ Here's a classic example—a bank account:
 ```java
 public class BankAccount {
     private int balance = 1000;
-    
+
     public void withdraw(int amount) {
         // Check if sufficient balance
         if (balance >= amount) {
@@ -271,17 +286,17 @@ public class BankAccount {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
             // Withdraw the amount
             balance -= amount;
-            System.out.println(Thread.currentThread().getName() + 
+            System.out.println(Thread.currentThread().getName() +
                 " withdrew " + amount + ", balance: " + balance);
         } else {
-            System.out.println(Thread.currentThread().getName() + 
+            System.out.println(Thread.currentThread().getName() +
                 " insufficient funds");
         }
     }
-    
+
     public int getBalance() {
         return balance;
     }
@@ -290,23 +305,24 @@ public class BankAccount {
 public class RaceConditionDemo {
     public static void main(String[] args) throws InterruptedException {
         BankAccount account = new BankAccount();
-        
+
         // Two threads trying to withdraw simultaneously
         Thread wife = new Thread(() -> account.withdraw(800), "Wife");
         Thread husband = new Thread(() -> account.withdraw(800), "Husband");
-        
+
         wife.start();
         husband.start();
-        
+
         wife.join();
         husband.join();
-        
+
         System.out.println("Final balance: " + account.getBalance());
     }
 }
 ```
 
 **Output:**
+
 ```
 Wife withdrew 800, balance: 200
 Husband withdrew 800, balance: -600
@@ -324,7 +340,7 @@ Changes made by one thread might not be visible to other threads immediately:
 ```java
 public class VisibilityDemo {
     private static boolean flag = false;
-    
+
     public static void main(String[] args) throws InterruptedException {
         Thread writer = new Thread(() -> {
             try {
@@ -335,7 +351,7 @@ public class VisibilityDemo {
             flag = true;
             System.out.println("Flag set to true");
         });
-        
+
         Thread reader = new Thread(() -> {
             while (!flag) {
                 // Waiting for flag to become true
@@ -343,7 +359,7 @@ public class VisibilityDemo {
             }
             System.out.println("Flag is now true!");
         });
-        
+
         reader.start();
         writer.start();
     }
@@ -359,6 +375,7 @@ private static volatile boolean flag = false;
 ```
 
 `volatile` ensures:
+
 - Writes are immediately visible to all threads
 - Reads always get the latest value
 
@@ -372,34 +389,34 @@ Classic example:
 public class DeadlockDemo {
     private static final Object lock1 = new Object();
     private static final Object lock2 = new Object();
-    
+
     public static void main(String[] args) {
         Thread thread1 = new Thread(() -> {
             synchronized (lock1) {
                 System.out.println("Thread 1: Holding lock 1...");
-                
+
                 try { Thread.sleep(100); } catch (InterruptedException e) {}
-                
+
                 System.out.println("Thread 1: Waiting for lock 2...");
                 synchronized (lock2) {
                     System.out.println("Thread 1: Holding lock 1 & 2");
                 }
             }
         });
-        
+
         Thread thread2 = new Thread(() -> {
             synchronized (lock2) {
                 System.out.println("Thread 2: Holding lock 2...");
-                
+
                 try { Thread.sleep(100); } catch (InterruptedException e) {}
-                
+
                 System.out.println("Thread 2: Waiting for lock 1...");
                 synchronized (lock1) {
                     System.out.println("Thread 2: Holding lock 1 & 2");
                 }
             }
         });
-        
+
         thread1.start();
         thread2.start();
     }
@@ -407,6 +424,7 @@ public class DeadlockDemo {
 ```
 
 **Output:**
+
 ```
 Thread 1: Holding lock 1...
 Thread 2: Holding lock 2...
@@ -416,6 +434,7 @@ Thread 2: Waiting for lock 1...
 ```
 
 **What happened?**
+
 - Thread 1 holds lock1, wants lock2
 - Thread 2 holds lock2, wants lock1
 - Both wait forever
@@ -433,7 +452,7 @@ The `synchronized` keyword ensures that only one thread can execute a block of c
 ```java
 public class BankAccountFixed {
     private int balance = 1000;
-    
+
     // Method-level synchronization
     public synchronized void withdraw(int amount) {
         if (balance >= amount) {
@@ -442,16 +461,16 @@ public class BankAccountFixed {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
             balance -= amount;
-            System.out.println(Thread.currentThread().getName() + 
+            System.out.println(Thread.currentThread().getName() +
                 " withdrew " + amount + ", balance: " + balance);
         } else {
-            System.out.println(Thread.currentThread().getName() + 
+            System.out.println(Thread.currentThread().getName() +
                 " insufficient funds");
         }
     }
-    
+
     public synchronized int getBalance() {
         return balance;
     }
@@ -487,6 +506,7 @@ public void method() {
 ```
 
 **Key points:**
+
 - Every object in Java has a monitor
 - Only one thread can hold a monitor at a time
 - Other threads wait until the monitor is released
@@ -499,20 +519,20 @@ You don't always need to synchronize the entire method:
 public class Counter {
     private int count = 0;
     private final Object lock = new Object();
-    
+
     public void increment() {
         // Non-critical code (doesn't need sync)
         System.out.println("About to increment");
-        
+
         // Critical section (needs sync)
         synchronized (lock) {
             count++;
         }
-        
+
         // More non-critical code
         System.out.println("Incremented");
     }
-    
+
     public int getCount() {
         synchronized (lock) {
             return count;
@@ -522,6 +542,7 @@ public class Counter {
 ```
 
 **Benefits:**
+
 - Faster execution (less time spent synchronized)
 - More granular control
 - Better concurrency (threads don't block unnecessarily)
@@ -549,7 +570,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BankAccountWithLock {
     private int balance = 1000;
     private final Lock lock = new ReentrantLock();
-    
+
     public void withdraw(int amount) {
         lock.lock();  // Acquire lock
         try {
@@ -559,12 +580,12 @@ public class BankAccountWithLock {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                
+
                 balance -= amount;
-                System.out.println(Thread.currentThread().getName() + 
+                System.out.println(Thread.currentThread().getName() +
                     " withdrew " + amount + ", balance: " + balance);
             } else {
-                System.out.println(Thread.currentThread().getName() + 
+                System.out.println(Thread.currentThread().getName() +
                     " insufficient funds");
             }
         } finally {
@@ -648,11 +669,13 @@ private final Lock unfairLock = new ReentrantLock(false);
 ### When to Use Which?
 
 **Use synchronized when:**
+
 - Simple locking needs
 - Don't need timeout or try-lock
 - Want cleaner, more readable code
 
 **Use ReentrantLock when:**
+
 - Need try-lock or timeout functionality
 - Need fair lock behavior
 - Need to interrupt lock acquisition
@@ -670,7 +693,7 @@ public class BadServer {
     public static void main(String[] args) {
         while (true) {
             Request request = waitForRequest();
-            
+
             // Create a new thread for every request!
             new Thread(() -> processRequest(request)).start();
         }
@@ -679,6 +702,7 @@ public class BadServer {
 ```
 
 **Problems:**
+
 - Thread creation is expensive (memory, time)
 - Each thread consumes ~1 MB of memory
 - Context switching overhead increases
@@ -695,11 +719,11 @@ import java.util.concurrent.Executors;
 
 public class GoodServer {
     private static final ExecutorService executor = Executors.newFixedThreadPool(10);
-    
+
     public static void main(String[] args) {
         while (true) {
             Request request = waitForRequest();
-            
+
             // Submit task to thread pool
             executor.submit(() -> processRequest(request));
         }
@@ -708,6 +732,7 @@ public class GoodServer {
 ```
 
 **Benefits:**
+
 - Threads are created once and reused
 - Controlled number of concurrent threads
 - Automatic task queuing when all threads are busy
@@ -777,34 +802,34 @@ import java.util.ArrayList;
 public class TaskProcessorDemo {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(5);
-        
+
         // Submit tasks and collect Futures
         List<Future<Integer>> futures = new ArrayList<>();
-        
+
         for (int i = 1; i <= 10; i++) {
             final int taskId = i;
             Future<Integer> future = executor.submit(() -> {
-                System.out.println("Processing task " + taskId + 
+                System.out.println("Processing task " + taskId +
                     " on " + Thread.currentThread().getName());
-                
+
                 Thread.sleep(1000);  // Simulate work
-                
+
                 return taskId * 2;  // Return result
             });
-            
+
             futures.add(future);
         }
-        
+
         // Get results
         System.out.println("\nResults:");
         for (Future<Integer> future : futures) {
             System.out.println("Result: " + future.get());
         }
-        
+
         // Shutdown executor
         executor.shutdown();
         executor.awaitTermination(1, TimeUnit.MINUTES);
-        
+
         System.out.println("All tasks completed");
     }
 }
@@ -887,6 +912,7 @@ for (String key : map.keySet()) {
 ```
 
 **Benefits:**
+
 - Much faster than `Collections.synchronizedMap()`
 - Lock-free reads
 - Fine-grained locking for writes
@@ -911,6 +937,7 @@ for (String item : list) {
 ```
 
 **Use when:**
+
 - Many reads, few writes
 - Iteration is more common than modification
 - You can afford the copy cost on writes
@@ -924,7 +951,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class ProducerConsumerDemo {
     public static void main(String[] args) {
         BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
-        
+
         // Producer thread
         Thread producer = new Thread(() -> {
             try {
@@ -937,7 +964,7 @@ public class ProducerConsumerDemo {
                 e.printStackTrace();
             }
         });
-        
+
         // Consumer thread
         Thread consumer = new Thread(() -> {
             try {
@@ -950,7 +977,7 @@ public class ProducerConsumerDemo {
                 e.printStackTrace();
             }
         });
-        
+
         producer.start();
         consumer.start();
     }
@@ -958,6 +985,7 @@ public class ProducerConsumerDemo {
 ```
 
 **Key methods:**
+
 - `put()`: Add item, block if full
 - `take()`: Remove item, block if empty
 - `offer()`: Add item, return false if full (non-blocking)
@@ -977,19 +1005,19 @@ public class CompletableFutureDemo {
         // Run async task
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
             System.out.println("Fetching data on " + Thread.currentThread().getName());
-            
+
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
             return "Data from API";
         });
-        
+
         // Do other work while waiting
         System.out.println("Doing other work...");
-        
+
         // Get result (blocks until complete)
         try {
             String result = future.get();
@@ -1037,20 +1065,20 @@ public class CombiningFutures {
             sleep(1000);
             return "Result from API 1";
         });
-        
+
         CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
             sleep(2000);
             return "Result from API 2";
         });
-        
+
         CompletableFuture<String> future3 = CompletableFuture.supplyAsync(() -> {
             sleep(1500);
             return "Result from API 3";
         });
-        
+
         // Wait for all to complete
         CompletableFuture<Void> allOf = CompletableFuture.allOf(future1, future2, future3);
-        
+
         allOf.thenRun(() -> {
             try {
                 System.out.println(future1.get());
@@ -1060,10 +1088,10 @@ public class CombiningFutures {
                 e.printStackTrace();
             }
         }).join();
-        
+
         System.out.println("All tasks completed");
     }
-    
+
     static void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -1108,9 +1136,9 @@ Sometimes each thread needs its own copy of a variable:
 ```java
 public class ThreadLocalDemo {
     // Each thread gets its own copy
-    private static ThreadLocal<SimpleDateFormat> dateFormat = 
+    private static ThreadLocal<SimpleDateFormat> dateFormat =
         ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
-    
+
     public static String formatDate(Date date) {
         // Each thread uses its own SimpleDateFormat instance
         // (SimpleDateFormat is not thread-safe!)
@@ -1120,6 +1148,7 @@ public class ThreadLocalDemo {
 ```
 
 **Use when:**
+
 - You have a non-thread-safe object (like `SimpleDateFormat`)
 - Creating the object is expensive
 - You don't want to synchronize access
@@ -1136,23 +1165,24 @@ public final class ImmutableUser {
     private final String name;
     private final int age;
     private final List<String> roles;
-    
+
     public ImmutableUser(String name, int age, List<String> roles) {
         this.name = name;
         this.age = age;
         // Defensive copy
         this.roles = Collections.unmodifiableList(new ArrayList<>(roles));
     }
-    
+
     public String getName() { return name; }
     public int getAge() { return age; }
     public List<String> getRoles() { return roles; }
-    
+
     // No setters - immutable!
 }
 ```
 
 **Benefits:**
+
 - No synchronization needed
 - Can be shared freely between threads
 - Simpler to reason about
@@ -1165,7 +1195,7 @@ The best concurrency bug is the one you don't have:
 // BAD - shared mutable state
 public class Counter {
     private int count = 0;  // Shared!
-    
+
     public void increment() {
         count++;  // Multiple threads = problems
     }
@@ -1181,7 +1211,7 @@ public class BetterCounter {
 // ALSO GOOD - use atomic variables
 public class AtomicCounter {
     private AtomicInteger count = new AtomicInteger(0);
-    
+
     public void increment() {
         count.incrementAndGet();  // Thread-safe!
     }
@@ -1195,6 +1225,7 @@ Multithreading isn't always faster. Sometimes it's slower!
 ### Context Switching Overhead
 
 When the CPU switches between threads, it must:
+
 1. Save the current thread's state
 2. Load the next thread's state
 3. Clear CPU caches
@@ -1204,6 +1235,7 @@ When the CPU switches between threads, it must:
 ### Memory Per Thread
 
 Each thread consumes memory:
+
 - Stack space: ~1 MB (default on most systems)
 - Thread-local variables
 - Bookkeeping data structures
@@ -1216,7 +1248,6 @@ Each thread consumes memory:
 
 - **CPU-bound tasks**: Number of threads ≈ number of CPU cores
   - More threads = more context switching, no benefit
-  
 - **I/O-bound tasks**: Number of threads > number of CPU cores
   - Threads spend time waiting on I/O
   - More threads = better CPU utilization
@@ -1253,25 +1284,25 @@ import java.util.concurrent.*;
 public class WebScraper {
     private final ExecutorService executor;
     private final int threadPoolSize;
-    
+
     public WebScraper(int threadPoolSize) {
         this.threadPoolSize = threadPoolSize;
         this.executor = Executors.newFixedThreadPool(threadPoolSize);
     }
-    
+
     public Map<String, String> scrapeUrls(List<String> urls) throws InterruptedException, ExecutionException {
         Map<String, String> results = new ConcurrentHashMap<>();
         List<Future<Void>> futures = new ArrayList<>();
-        
+
         long startTime = System.currentTimeMillis();
-        
+
         // Submit all scraping tasks
         for (String url : urls) {
             Future<Void> future = executor.submit(() -> {
                 try {
                     String content = fetchUrl(url);
                     results.put(url, content);
-                    System.out.println("Scraped: " + url + " on " + 
+                    System.out.println("Scraped: " + url + " on " +
                         Thread.currentThread().getName());
                 } catch (IOException e) {
                     System.err.println("Error scraping " + url + ": " + e.getMessage());
@@ -1281,40 +1312,40 @@ public class WebScraper {
             });
             futures.add(future);
         }
-        
+
         // Wait for all to complete
         for (Future<Void> future : futures) {
             future.get();
         }
-        
+
         long endTime = System.currentTimeMillis();
-        System.out.println("\nScraped " + urls.size() + " URLs in " + 
+        System.out.println("\nScraped " + urls.size() + " URLs in " +
             (endTime - startTime) + " ms using " + threadPoolSize + " threads");
-        
+
         return results;
     }
-    
+
     private String fetchUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
-        
+
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(conn.getInputStream()))) {
             StringBuilder content = new StringBuilder();
             String line;
             int lines = 0;
-            
+
             while ((line = reader.readLine()) != null && lines < 10) {
                 content.append(line).append("\n");
                 lines++;
             }
-            
+
             return content.toString();
         }
     }
-    
+
     public void shutdown() {
         executor.shutdown();
         try {
@@ -1325,7 +1356,7 @@ public class WebScraper {
             executor.shutdownNow();
         }
     }
-    
+
     public static void main(String[] args) throws Exception {
         List<String> urls = Arrays.asList(
             "https://www.example.com",
@@ -1334,13 +1365,13 @@ public class WebScraper {
             "https://www.reddit.com",
             "https://www.wikipedia.org"
         );
-        
+
         // Test with single thread
         System.out.println("=== Single Thread ===");
         WebScraper singleThread = new WebScraper(1);
         singleThread.scrapeUrls(urls);
         singleThread.shutdown();
-        
+
         // Test with multiple threads
         System.out.println("\n=== 5 Threads ===");
         WebScraper multiThread = new WebScraper(5);
@@ -1388,6 +1419,7 @@ We've covered a lot, but there are fundamental limitations with Java's tradition
 ### Problem 2: Thread Pool Tuning Is Hard
 
 How many threads should you use? It depends on:
+
 - Number of CPU cores
 - Type of work (CPU-bound vs I/O-bound)
 - Average task duration
@@ -1399,6 +1431,7 @@ How many threads should you use? It depends on:
 ### Problem 3: Complexity
 
 Look at the `CompletableFuture` chains we wrote. They work, but they're:
+
 - Hard to read
 - Hard to debug
 - Error-prone
@@ -1409,6 +1442,7 @@ Look at the `CompletableFuture` chains we wrote. They work, but they're:
 ### Problem 4: Blocking Operations
 
 When a thread blocks on I/O:
+
 - It consumes memory while doing nothing
 - Can't be used for other work
 - Limits scalability
@@ -1418,6 +1452,7 @@ When a thread blocks on I/O:
 ### What If There Was a Better Way?
 
 Imagine if:
+
 - Threads were so cheap you could create millions
 - No need to tune thread pools
 - Write simple, blocking code that scales massively
@@ -1434,16 +1469,19 @@ But that's a story for another post. **Want to learn about virtual threads and h
 Concurrency in Java is powerful but complex. Let's recap the key takeaways:
 
 **Core Concepts:**
+
 - Threads allow multiple tasks to run simultaneously
 - Each thread has its own execution path but shares memory
 - Creating threads is expensive; use thread pools
 
 **Common Problems:**
+
 - **Race conditions**: Multiple threads accessing shared data
 - **Deadlocks**: Circular dependencies on locks
 - **Visibility issues**: Changes not visible across threads
 
 **Solutions:**
+
 - Use `synchronized` for simple locking
 - Use `ReentrantLock` for advanced control
 - Use concurrent collections (`ConcurrentHashMap`, etc.)
@@ -1451,6 +1489,7 @@ Concurrency in Java is powerful but complex. Let's recap the key takeaways:
 - Prefer immutability and avoid shared mutable state
 
 **Best Practices:**
+
 - Synchronize only what needs synchronization
 - Keep critical sections small
 - Use appropriate thread pool sizes
@@ -1483,4 +1522,3 @@ And don't forget—when you're ready to learn how Java 21 makes all of this 10x 
 - [Oracle Java Tutorials: Concurrency](https://docs.oracle.com/javase/tutorial/essential/concurrency/)
 - [java.util.concurrent package documentation](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html)
 - [JEP 444: Virtual Threads](https://openjdk.org/jeps/444) - Preview of what's next!
-

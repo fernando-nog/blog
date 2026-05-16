@@ -35,6 +35,7 @@ $ yarn create astro
 ```
 
 This command will:
+
 1. Ask for your project name
 2. Let you choose a template (blog, portfolio, docs, etc.)
 3. Configure TypeScript support
@@ -87,7 +88,7 @@ const currentYear = new Date().getFullYear();
     color: white;
     border-radius: 8px;
   }
-  
+
   h1 {
     margin: 0 0 1rem 0;
     font-size: 2rem;
@@ -114,6 +115,7 @@ import Counter from '../components/Counter.jsx';
 ```
 
 The `client:load` directive tells Astro to hydrate this component immediately when the page loads. Other options include:
+
 - `client:idle` - Hydrate when the browser is idle
 - `client:visible` - Hydrate when the component enters the viewport
 - `client:media` - Hydrate based on media queries
@@ -171,11 +173,11 @@ const { title, description = "My Astro Blog" } = Astro.props;
         <a href="/about">About</a>
       </nav>
     </header>
-    
+
     <main>
       <slot />
     </main>
-    
+
     <footer>
       <p>&copy; 2024 My Astro Blog</p>
     </footer>
@@ -195,7 +197,7 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
   <article>
     <h1>My First Astro Post</h1>
     <p>This is my first blog post built with Astro!</p>
-    
+
     <p>Astro makes it incredibly easy to create fast, content-rich websites.</p>
   </article>
 </BlogLayout>
@@ -207,19 +209,19 @@ For a more sophisticated blog, use Astro's content collections:
 
 ```typescript
 // src/content/config.ts
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content"
 
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
     date: z.date(),
     tags: z.array(z.string()).optional(),
   }),
-});
+})
 
-export const collections = { blog };
+export const collections = { blog }
 ```
 
 Then create your posts as markdown files:
@@ -248,6 +250,7 @@ $ yarn dev
 ```
 
 Astro provides:
+
 - **Hot Module Replacement (HMR)** for instant updates
 - **TypeScript support** out of the box
 - **Built-in dev tools** for debugging
@@ -259,6 +262,7 @@ $ yarn build
 ```
 
 This creates an optimized `dist/` folder with:
+
 - Minified HTML, CSS, and JavaScript
 - Optimized images and assets
 - Static files ready for deployment
