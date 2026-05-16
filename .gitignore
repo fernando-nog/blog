@@ -80,3 +80,31 @@ submit-to-indexnow.sh
 test-indexnow.sh
 WIP.txt
 readme-profile.md
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Security / Keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.der
+
+# Local env / Secrets
+.env
+.env.local
+.env.*.local
+
+# Misc local tooling
+.vercel/
+.serverless/
+terraform.tfstate*
+*.tfvars
+package-lock.json
+# Lockfiles (security - pin versions in package.json instead)
