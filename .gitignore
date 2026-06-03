@@ -108,3 +108,4 @@ terraform.tfstate*
 *.tfvars
 package-lock.json
 # Lockfiles (security - pin versions in package.json instead)
+yarn.lock
