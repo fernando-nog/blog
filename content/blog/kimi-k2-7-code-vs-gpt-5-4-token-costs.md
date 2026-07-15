@@ -1,6 +1,6 @@
 ---
 title: "Kimi K2.7 Code vs GPT-5.4 vs GPT-5.5: Token Costs, Benchmarks, and Architecture Compared"
-date: "2026-07-11"
+date: "2026-07-15"
 description: "A detailed comparison of API pricing, coding benchmarks, model architecture, and reasoning capabilities between Moonshot AI's Kimi K2.7 Code and OpenAI's GPT-5.4 and GPT-5.5."
 tags:
   ["AI", "LLM", "Kimi", "OpenAI", "Coding", "CostOptimization", "Benchmarks"]
@@ -14,18 +14,18 @@ With Moonshot AI's Kimi K2.7 Code and OpenAI's GPT-5.4 and GPT-5.5 all on the ta
 
 Before we look at performance, it helps to understand what is running under the hood.
 
-|                          | Kimi K2.7 Code                    | GPT-5.4                         | GPT-5.5                         |
-| ------------------------ | --------------------------------- | ------------------------------- | ------------------------------- |
-| **Architecture**         | Mixture-of-Experts (MoE)          | Dense Transformer (undisclosed) | Dense Transformer (undisclosed) |
-| **Total Parameters**     | 1T (1,000B)                       | Not disclosed                   | Not disclosed                   |
-| **Activated Parameters** | 32B per token                     | Not disclosed                   | Not disclosed                   |
-| **Number of Experts**    | 384 (8 selected per token)        | N/A                             | N/A                             |
-| **Attention Mechanism**  | Multi-head Latent Attention (MLA) | Not disclosed                   | Not disclosed                   |
-| **Vision Encoder**       | MoonViT (400M params)             | Native vision                   | Native vision                   |
-| **Context Window**       | 256K tokens                       | 128K (short) / 1M (extended)    | 1M tokens                       |
-| **Open Source**          | Yes (Hugging Face)                | No                              | No                              |
+|                          | Kimi K2.7 Code                    | GPT-5.4                      | GPT-5.5       |
+| ------------------------ | --------------------------------- | ---------------------------- | ------------- |
+| **Architecture**         | Mixture-of-Experts (MoE)          | Not disclosed                | Not disclosed |
+| **Total Parameters**     | 1T (1,000B)                       | Not disclosed                | Not disclosed |
+| **Activated Parameters** | 32B per token                     | Not disclosed                | Not disclosed |
+| **Number of Experts**    | 384 (8 selected per token)        | N/A                          | N/A           |
+| **Attention Mechanism**  | Multi-head Latent Attention (MLA) | Not disclosed                | Not disclosed |
+| **Vision Encoder**       | MoonViT (400M params)             | Native vision                | Native vision |
+| **Context Window**       | 256K tokens                       | 128K (short) / 1M (extended) | 1M tokens     |
+| **Open Source**          | Yes (Hugging Face)                | No                           | No            |
 
-Kimi K2.7 Code uses a Mixture-of-Experts architecture with 1 trillion total parameters but only activates 32 billion per token. This is the key to its efficiency: you get the knowledge capacity of a massive model with the inference cost of a much smaller one. OpenAI does not disclose parameter counts for GPT-5.4 or GPT-5.5, but the pricing suggests they are running substantially larger active parameter counts.
+Kimi K2.7 Code uses a Mixture-of-Experts architecture with 1 trillion total parameters but only activates 32 billion per token. This is the key to its efficiency: you get the knowledge capacity of a massive model with the inference cost of a much smaller one. OpenAI does not disclose parameter counts or architecture details for GPT-5.4 or GPT-5.5.
 
 ## Token Pricing: The Hard Numbers
 
@@ -41,7 +41,7 @@ All prices are per 1 million tokens, standard tier.
 
 The first thing that jumps out: **GPT-5.5 output tokens cost 7.5x more than Kimi K2.7 Code**. Even GPT-5.4 output is 3.75x more expensive. For a coding session where the model generates hundreds of lines of code, this difference compounds fast.
 
-Kimi also offers a **HighSpeed** variant that pushes output to roughly 180 tokens per second (up to 260 tok/s in short contexts). Even at double the standard price, it is still nearly half the cost of GPT-5.4 output.
+Kimi also offers a **HighSpeed** variant that pushes output to roughly 180 tokens per second (up to 260 tok/s in short contexts). Even at double the standard price, it is still roughly half the cost of GPT-5.4 output ($8.00 vs $15.00).
 
 GPT-5.4-mini is price-competitive with Kimi K2.7 Code on output, but it is a significantly smaller model with less reasoning depth, as the benchmarks will show.
 
@@ -49,7 +49,7 @@ GPT-5.4-mini is price-competitive with Kimi K2.7 Code on output, but it is a sig
 
 Here is where the rubber meets the road. These are the published benchmark scores from each model's official release pages.
 
-### Kimi K2.7 Code vs GPT-5.5 vs Claude Opus 4.8
+### Kimi K2.7 Code vs GPT-5.5 (with Claude Opus 4.8 for reference)
 
 | Benchmark              | Kimi K2.6 | Kimi K2.7 Code | GPT-5.5 | Claude Opus 4.8 |
 | ---------------------- | --------- | -------------- | ------- | --------------- |
@@ -95,6 +95,8 @@ Kimi K2.6, the predecessor to K2.7 Code, published scores against GPT-5.4:
 
 Kimi K2.6 already matched or exceeded GPT-5.4 on several coding benchmarks. K2.7 Code improves further on these scores, though direct comparisons against GPT-5.4 on the same benchmarks are not yet published.
 
+Note: the Terminal-Bench 2.0 scores differ between tables because Kimi evaluated GPT-5.4 using the Terminus-2 framework (65.4), while OpenAI's own published score uses their internal evaluation harness (75.1). Different frameworks produce different results on the same benchmark.
+
 ## Reasoning Capabilities
 
 ### Thinking and Deep Reasoning
@@ -107,7 +109,7 @@ GPT-5.4 and GPT-5.5 support configurable reasoning effort levels (from `none` to
 
 Kimi K2.7 Code offers a **256K token context window** as standard. This is critical for coding tasks where you need the model to understand an entire codebase, multiple files, or a long conversation history.
 
-GPT-5.4 offers 128K tokens in its short context tier (at $2.50/$15.00). Extended context up to 1M tokens is available but costs double: $5.00/M input and $22.50/M output.
+GPT-5.4 offers 128K tokens in its short context tier (at $2.50/$15.00). Extended context up to 1M tokens is available at $5.00/M input and $22.50/M output.
 
 GPT-5.5 offers a **1M token context window** as standard, priced at $5.00/M input and $30.00/M output.
 
