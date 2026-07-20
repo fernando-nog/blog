@@ -1,6 +1,6 @@
 ---
 title: "Kimi K2.7 Code vs GPT-5.4 vs GPT-5.5: Token Costs, Benchmarks, and Architecture Compared"
-date: "2026-07-15"
+date: "2026-07-20"
 description: "A detailed comparison of API pricing, coding benchmarks, model architecture, and reasoning capabilities between Moonshot AI's Kimi K2.7 Code and OpenAI's GPT-5.4 and GPT-5.5."
 tags:
   ["AI", "LLM", "Kimi", "OpenAI", "Coding", "CostOptimization", "Benchmarks"]
