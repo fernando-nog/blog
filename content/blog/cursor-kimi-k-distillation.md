@@ -1,6 +1,6 @@
 ---
 title: "Cursor's Secret Architecture: Kimi-k, Claude Distillation, and the New AI Stack"
-date: "2026-07-15"
+date: "2026-07-20"
 description: "A technical dive into how Moonshot AI's Kimi-k models and the art of distillation are powering the near-instant coding experience in Cursor."
 tags: ["AI", "LLM", "Cursor", "MoonshotAI", "SoftwareEngineering"]
 ---
