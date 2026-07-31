@@ -5,11 +5,11 @@
  * See: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
-import { graphql, useStaticQuery } from "gatsby"
+import { graphql, Link, useStaticQuery } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import * as React from "react"
 
-const Bio = () => {
+const Bio = ({ compact = false }) => {
   const data = useStaticQuery(graphql`
     query BioQuery {
       site {
@@ -34,23 +34,34 @@ const Bio = () => {
 
   return (
     <div className="bio">
-      <StaticImage
-        className="bio-avatar"
-        layout="fixed"
-        formats={["auto", "webp", "avif"]}
-        src="../images/profile-pic.jpeg"
-        width={60}
-        height={60}
-        quality={95}
-        alt="Profile picture"
-      />
+      <Link to="/about/" aria-label="About Fernando Nogueira">
+        <StaticImage
+          className="bio-avatar"
+          layout="fixed"
+          formats={["auto", "webp", "avif"]}
+          src="../images/profile-pic.jpeg"
+          width={60}
+          height={60}
+          quality={95}
+          alt="Fernando Nogueira profile picture"
+        />
+      </Link>
       {author?.name && (
         <div className="bio-content">
           <p className="bio-description">
             Written by{" "}
-            <strong className="bio-author-name">{author.name}</strong>{" "}
+            <Link to="/about/">
+              <strong className="bio-author-name">{author.name}</strong>
+            </Link>{" "}
             {author?.summary || null}
           </p>
+          {!compact && (
+            <p className="bio-description" style={{ fontSize: `0.9rem` }}>
+              13+ years building scalable systems with Java, Kotlin, Go, and
+              cloud-native platforms. Read more{" "}
+              <Link to="/about/">about me and this blog</Link>.
+            </p>
+          )}
           <div className="bio-social">
             <a
               href={`https://www.linkedin.com/in/${social?.linkedin || ``}`}

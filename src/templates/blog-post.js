@@ -15,6 +15,10 @@ const BlogPostTemplate = ({ data, location }) => {
       <Seo
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
+        pathname={location.pathname}
+        article={true}
+        datePublished={post.frontmatter.rawDate}
+        dateModified={post.frontmatter.rawDate}
       />
       <article
         className="blog-post"
@@ -84,6 +88,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        rawDate: date
         description
       }
     }

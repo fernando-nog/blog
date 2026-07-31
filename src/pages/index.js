@@ -2,11 +2,12 @@ import * as React from "react"
 import LandingPage from "../components/landing-page"
 import Seo from "../components/seo"
 
-const HomePage = () => {
+const HomePage = ({ location }) => {
   return (
     <>
       <Seo
         title="Fernando Nogueira - Tech Lead & Software Engineer"
+        pathname={location.pathname}
         meta={[
           {
             name: "msvalidate.01",
