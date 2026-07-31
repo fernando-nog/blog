@@ -44,12 +44,6 @@ const LandingPage = () => {
 
   return (
     <div className="global-wrapper" data-is-root-path={true}>
-      <header className="global-header">
-        <Link className="header-link-home" to="/">
-          {siteTitle}
-        </Link>
-      </header>
-
       <main>
         <section className="landing-hero">
           <div className="landing-avatar-container">
