@@ -17,10 +17,28 @@ const LandingPage = () => {
           }
         }
       }
+      allMarkdownRemark(
+        sort: { frontmatter: { date: DESC } }
+        limit: 5
+        filter: { frontmatter: { title: { ne: "" } } }
+      ) {
+        nodes {
+          excerpt(pruneLength: 160)
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
+        }
+      }
     }
   `)
 
   const social = data.site.siteMetadata?.social
+  const latestPosts = data.allMarkdownRemark?.nodes || []
 
   return (
     <div className="landing-container">
@@ -68,6 +86,44 @@ const LandingPage = () => {
             blog
           </Link>
         </div>
+
+        {/* Latest Posts */}
+        {latestPosts.length > 0 && (
+          <div
+            className="landing-latest-posts"
+            style={{ marginTop: `3rem`, textAlign: `left` }}
+          >
+            <h2 style={{ textAlign: `center`, marginBottom: `1.5rem` }}>
+              Latest Posts
+            </h2>
+            <ol style={{ listStyle: `none`, margin: 0, padding: 0 }}>
+              {latestPosts.map(post => {
+                const title = post.frontmatter.title || post.fields.slug
+                return (
+                  <li key={post.fields.slug} style={{ marginBottom: `1.5rem` }}>
+                    <article className="post-list-item">
+                      <header>
+                        <h3 style={{ marginBottom: `0.25rem`, marginTop: 0 }}>
+                          <Link to={post.fields.slug}>{title}</Link>
+                        </h3>
+                        <small>{post.frontmatter.date}</small>
+                      </header>
+                      <p
+                        style={{ marginBottom: 0, marginTop: `0.5rem` }}
+                        dangerouslySetInnerHTML={{
+                          __html: post.frontmatter.description || post.excerpt,
+                        }}
+                      />
+                    </article>
+                  </li>
+                )
+              })}
+            </ol>
+            <p style={{ textAlign: `center`, marginTop: `1.5rem` }}>
+              <Link to="/blog/">View all posts →</Link>
+            </p>
+          </div>
+        )}
 
         {/* Social Links */}
         <div className="landing-social">
