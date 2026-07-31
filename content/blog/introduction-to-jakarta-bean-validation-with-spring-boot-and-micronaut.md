@@ -370,7 +370,7 @@ That last point matters. Validation annotations improve developer ergonomics, bu
 
 Neither approach is universally better. Spring Boot gives you familiar integration with a widely used validator stack. Micronaut gives you a more compile-time-oriented model that fits well when startup time, native image support, and reflection reduction matter.
 
-If you are also comparing the broader framework tradeoffs, I already covered Micronaut more generally in [micronaut-modern-microservices-framework-2025.md](/Users/fernandonogueira/workspace/pessoal/blog/content/blog/micronaut-modern-microservices-framework-2025.md) and Spring runtime choices in [spring-boot-vs-spring-webflux-when-to-use-performance-comparison.md](/Users/fernandonogueira/workspace/pessoal/blog/content/blog/spring-boot-vs-spring-webflux-when-to-use-performance-comparison.md).
+If you are also comparing the broader framework tradeoffs, I already covered Micronaut more generally in [Micronaut: A Modern Microservices Framework for 2025](./micronaut-modern-microservices-framework-2025/) and Spring runtime choices in [Spring Boot vs Spring Webflux](./spring-boot-vs-spring-webflux-when-to-use-performance-comparison/).
 
 ## Conclusion
 
