@@ -18,7 +18,10 @@ const Seo = ({
   image,
   article = false,
   canonicalUrl,
+  pathname,
   noindex = false,
+  datePublished,
+  dateModified,
 }) => {
   const { site } = useStaticQuery(graphql`
     query {
@@ -46,8 +49,75 @@ const Seo = ({
   const siteUrl = site.siteMetadata?.siteUrl || ""
   const defaultImage = image || site.siteMetadata?.image
   const imageUrl = defaultImage ? `${siteUrl}${defaultImage}` : null
-  const pageUrl = canonicalUrl || `${siteUrl}`
+  const pagePath = pathname || "/"
+  const pageUrl = canonicalUrl || `${siteUrl}${pagePath}`
   const author = site.siteMetadata?.author?.name || ""
+  const authorSummary = site.siteMetadata?.author?.summary || ""
+  const linkedin = site.siteMetadata?.social?.linkedin || ""
+  const stackoverflow = site.siteMetadata?.social?.stackoverflow || ""
+  const github = site.siteMetadata?.social?.github || ""
+  const sameAs = [
+    ...(linkedin ? [`https://www.linkedin.com/in/${linkedin}`] : []),
+    ...(stackoverflow
+      ? [`https://stackoverflow.com/users/${stackoverflow}`]
+      : []),
+    ...(github ? [`https://github.com/${github}`] : []),
+  ]
+
+  const authorSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: author,
+    jobTitle: "Tech Lead & Software Engineer",
+    description: authorSummary,
+    url: siteUrl,
+    sameAs: sameAs.length > 0 ? sameAs : undefined,
+  }
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: defaultTitle,
+    url: siteUrl,
+    author: {
+      "@type": "Person",
+      name: author,
+    },
+  }
+
+  const blogPostingSchema = article
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description: metaDescription,
+        author: {
+          "@type": "Person",
+          name: author,
+          url: siteUrl,
+          sameAs: sameAs.length > 0 ? sameAs : undefined,
+        },
+        publisher: {
+          "@type": "Person",
+          name: author,
+          url: siteUrl,
+        },
+        url: pageUrl,
+        image: imageUrl,
+        datePublished: datePublished || undefined,
+        dateModified: dateModified || datePublished || undefined,
+      }
+    : null
+
+  const schemaObjects = [authorSchema, websiteSchema]
+  if (blogPostingSchema) {
+    schemaObjects.push(blogPostingSchema)
+  }
+
+  const schemaScript = {
+    type: "application/ld+json",
+    innerHTML: JSON.stringify(schemaObjects),
+  }
 
   return (
     <Helmet
@@ -62,6 +132,7 @@ const Seo = ({
           href: pageUrl,
         },
       ]}
+      script={[schemaScript]}
       meta={[
         {
           name: `description`,
@@ -172,7 +243,10 @@ Seo.defaultProps = {
   image: null,
   article: false,
   canonicalUrl: null,
+  pathname: null,
   noindex: false,
+  datePublished: null,
+  dateModified: null,
 }
 
 Seo.propTypes = {
@@ -184,6 +258,9 @@ Seo.propTypes = {
   article: PropTypes.bool,
   canonicalUrl: PropTypes.string,
   noindex: PropTypes.bool,
+  pathname: PropTypes.string,
+  datePublished: PropTypes.string,
+  dateModified: PropTypes.string,
 }
 
 export default Seo

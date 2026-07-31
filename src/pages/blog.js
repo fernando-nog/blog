@@ -11,8 +11,12 @@ const BlogListingPage = ({ data, location }) => {
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle}>
-        <Seo title="Blog Posts" />
-        <Bio />
+        <Seo
+          title="Blog Posts"
+          description="Practical articles about Java, Spring Boot, cloud infrastructure, Docker, Kubernetes, and AI-assisted development."
+          pathname={location.pathname}
+        />
+        <Bio compact />
         <p>No blog posts found...</p>
       </Layout>
     )
