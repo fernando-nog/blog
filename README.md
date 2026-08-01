@@ -16,6 +16,19 @@ The site is built as a static Gatsby site and includes the following:
 - Open Graph and Twitter Cards
 - RSS feed at `/rss.xml`
 - Google Analytics 4
+- Bing Webmaster Tools verification (`BingSiteAuth.xml` and `msvalidate.01` meta tag)
+- IndexNow key at `/7da7e958279d4584b39e1a298108ea4e.txt` for fast indexing on Bing, Yandex, Naver, Seznam, Yep, and other participating engines
+
+## Search Engine Indexing
+
+The site is optimized for discovery across multiple search engines:
+
+- **Google**: Sitemap at `/sitemap-index.xml`, canonical URLs, structured data
+- **Bing / Yahoo / DuckDuckGo / Ecosia**: IndexNow integration notifies participating engines of new and updated pages immediately after deploy
+- **Yandex, Naver, Seznam, Yep**: Also supported via IndexNow
+- **AI search engines (ChatGPT, Perplexity, Gemini, Copilot, etc.)**: They rely on the same signals — quality content, structured data, fresh sitemap, and external mentions/links
+
+A local helper script at `scripts/submit-indexnow.sh` submits URLs to IndexNow endpoints. It is intentionally kept out of git (see `.gitignore`) because it references a project-specific key.
 
 ## Available Scripts
 

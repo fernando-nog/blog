@@ -131,9 +131,20 @@ const Seo = ({
           rel: "canonical",
           href: pageUrl,
         },
+        // RSS feed for Bing/Yandex and feed readers
+        {
+          rel: "alternate",
+          type: "application/rss+xml",
+          href: `${siteUrl}/rss.xml`,
+        },
       ]}
       script={[schemaScript]}
       meta={[
+        // Bing Webmaster Tools ownership (meta fallback)
+        {
+          name: `msvalidate.01`,
+          content: `527715A695666B798E1D18C3FD66E418`,
+        },
         {
           name: `description`,
           content: metaDescription,
