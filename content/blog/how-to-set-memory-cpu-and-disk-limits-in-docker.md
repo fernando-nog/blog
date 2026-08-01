@@ -2,6 +2,7 @@
 title: "How to Set Memory, CPU and Disk Limits in Docker"
 date: "2025-08-30"
 description: "Learn how to effectively manage Docker container resources by setting memory, CPU, and disk limits using both docker run commands and Docker Compose configurations."
+tags: ["docker", "devops", "containers", "performance"]
 ---
 
 Resource management is crucial when working with Docker containers in production environments. Without proper limits, containers can consume excessive resources and potentially cause system instability. In this tutorial, I'll show you how to set memory, CPU, and disk limits for Docker containers using both the `docker run` command and Docker Compose configurations.

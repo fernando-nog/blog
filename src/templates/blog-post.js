@@ -3,6 +3,7 @@ import { Link, graphql } from "gatsby"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
+import RelatedPosts from "../components/related-posts"
 import Seo from "../components/seo"
 
 const BlogPostTemplate = ({ data, location }) => {
@@ -34,6 +35,10 @@ const BlogPostTemplate = ({ data, location }) => {
           itemProp="articleBody"
         />
         <hr />
+        <RelatedPosts
+          currentSlug={post.fields.slug}
+          currentTags={post.frontmatter.tags}
+        />
         <footer>
           <Bio />
         </footer>
@@ -85,11 +90,15 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      fields {
+        slug
+      }
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
         rawDate: date
         description
+        tags
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

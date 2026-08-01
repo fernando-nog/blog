@@ -413,6 +413,40 @@ a:focus {
   margin: var(--spacing-0);
 }
 
+.related-posts {
+  margin: var(--spacing-8) var(--spacing-0);
+  padding: var(--spacing-6);
+  background-color: rgba(0, 91, 153, 0.04);
+  border-radius: 8px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.related-posts h2 {
+  font-size: var(--fontSize-3);
+  margin: var(--spacing-0) var(--spacing-0) var(--spacing-4) var(--spacing-0);
+  color: var(--color-heading);
+}
+
+.related-posts ul {
+  list-style: none;
+  padding: var(--spacing-0);
+  margin: var(--spacing-0);
+}
+
+.related-posts li {
+  margin: var(--spacing-2) var(--spacing-0);
+}
+
+.related-posts a {
+  font-weight: var(--fontWeight-medium);
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.related-posts a:hover {
+  text-decoration: underline;
+}
+
 .gatsby-highlight {
   margin-bottom: var(--spacing-8);
 }
