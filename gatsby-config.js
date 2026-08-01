@@ -197,25 +197,44 @@ module.exports = {
             return acc
           }, {})
 
-          return allPages.map(page => {
-            const path = page.path
-            const isPost =
-              path !== "/" && path !== "/blog/" && path !== "/about/"
-            const lastmod = postDates[path]
+          return allPages
+            .filter(page => {
+              // Exclude error pages and non-public utility paths
+              const path = page.path
+              return (
+                path !== "/404/" &&
+                path !== "/404.html" &&
+                !path.startsWith("/do-not-track/") &&
+                !path.startsWith("/preview/")
+              )
+            })
+            .map(page => {
+              const path = page.path
+              const isPost =
+                path !== "/" && path !== "/blog/" && path !== "/about/"
+              const lastmod = postDates[path]
 
-            let priority = 0.5
-            if (path === "/") priority = 1.0
-            else if (path === "/blog/" || path === "/about/") priority = 0.6
-            else if (isPost) priority = 0.8
+              let priority = 0.5
+              let changefreq = "weekly"
+              if (path === "/") {
+                priority = 1.0
+                changefreq = "weekly"
+              } else if (path === "/blog/" || path === "/about/") {
+                priority = 0.6
+                changefreq = "monthly"
+              } else if (isPost) {
+                priority = 0.7
+                changefreq = "weekly"
+              }
 
-            return {
-              path,
-              siteUrl,
-              lastmod,
-              changefreq: "daily",
-              priority,
-            }
-          })
+              return {
+                path,
+                siteUrl,
+                lastmod: lastmod ? lastmod.split("T")[0] : undefined,
+                changefreq,
+                priority,
+              }
+            })
         },
         serialize: ({ path, lastmod, changefreq, priority, siteUrl }) => {
           const entry = {

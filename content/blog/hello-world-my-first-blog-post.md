@@ -2,6 +2,7 @@
 title: "Hello World - My First Blog Post"
 date: "2025-08-28"
 description: "Welcome to my technical blog! This is my first post where I introduce myself and share what you can expect from this blog."
+tags: ["blog", "introduction"]
 ---
 
 # Hello World! 👋
