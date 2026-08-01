@@ -24,7 +24,11 @@ const BlogListingPage = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Seo title="Blog Posts" />
+      <Seo
+        title="Blog Posts"
+        description="Practical articles about Java, Spring Boot, cloud infrastructure, Docker, Kubernetes, and AI-assisted development."
+        pathname={location.pathname}
+      />
       <Bio />
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
