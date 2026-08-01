@@ -75,6 +75,7 @@ yarn-error.log
 .cursorrules
 AGENTS.md
 skills/
+scripts/
 submit-new-post.sh
 submit-to-indexnow.sh
 test-indexnow.sh

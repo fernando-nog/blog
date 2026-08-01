@@ -156,7 +156,80 @@ module.exports = {
       },
     },
     // SEO plugins
-    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
+            allSitePage {
+              nodes {
+                path
+              }
+            }
+            allMarkdownRemark {
+              nodes {
+                fields {
+                  slug
+                }
+                frontmatter {
+                  date
+                }
+              }
+            }
+          }
+        `,
+        resolveSiteUrl: ({ site }) => site.siteMetadata.siteUrl,
+        resolvePages: ({
+          site,
+          allSitePage: { nodes: allPages },
+          allMarkdownRemark: { nodes: allPosts },
+        }) => {
+          const siteUrl = site.siteMetadata.siteUrl
+          const postDates = allPosts.reduce((acc, post) => {
+            if (post.fields?.slug && post.frontmatter?.date) {
+              acc[post.fields.slug] = post.frontmatter.date
+            }
+            return acc
+          }, {})
+
+          return allPages.map(page => {
+            const path = page.path
+            const isPost =
+              path !== "/" && path !== "/blog/" && path !== "/about/"
+            const lastmod = postDates[path]
+
+            let priority = 0.5
+            if (path === "/") priority = 1.0
+            else if (path === "/blog/" || path === "/about/") priority = 0.6
+            else if (isPost) priority = 0.8
+
+            return {
+              path,
+              siteUrl,
+              lastmod,
+              changefreq: "daily",
+              priority,
+            }
+          })
+        },
+        serialize: ({ path, lastmod, changefreq, priority, siteUrl }) => {
+          const entry = {
+            url: `${siteUrl}${path}`,
+            changefreq,
+            priority,
+          }
+          if (lastmod) {
+            entry.lastmod = lastmod
+          }
+          return entry
+        },
+      },
+    },
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
