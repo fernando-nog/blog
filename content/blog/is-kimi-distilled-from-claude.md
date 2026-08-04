@@ -2,7 +2,18 @@
 title: "Is Kimi Distilled from Claude? Here Is What We Know"
 date: "2026-07-30"
 description: "Is Kimi distilled from Claude? We investigate the evidence behind Kimi distillation — output similarity, Anthropic's terms of service, community consensus, and what it means for developers using Kimi distilled models."
-tags: ["AI", "LLM", "Kimi", "Claude", "Anthropic", "MoonshotAI", "Distillation"]
+tags:
+  [
+    "AI",
+    "LLM",
+    "Kimi",
+    "Claude",
+    "Anthropic",
+    "MoonshotAI",
+    "Distillation",
+    "distillation",
+    "on-device ai",
+  ]
 ---
 
 If you have been following the AI coding space, you have probably asked the question yourself: **is Kimi distilled from Claude?**
@@ -210,6 +221,9 @@ For now, the evidence strongly suggests that Kimi was distilled from Claude, but
 - [Kimi K2.7 Code vs GPT-5.4 vs GPT-5.5: Token Costs, Benchmarks, and Architecture Compared](/kimi-k2-7-code-vs-gpt-5-4-token-costs/)
 - [Kimi K2.7 Code vs Kimi K3 for Coding: Which One to Use and What It Costs](/kimi-k2-7-code-vs-kimi-k3-coding-comparison/)
 - [Cursor's Secret Architecture: Kimi-k, Claude Distillation, and the New AI Stack](/cursor-kimi-k-distillation/)
+- [Can a 3.9 GB Model Really Code? Testing Bonsai 27B 1-Bit on a Laptop](/can-a-3-9-gb-model-really-code-testing-bonsai-27b-1-bit-on-a-laptop/)
+- [How Bonsai 27B Packs 27B-Class Reasoning into 1-Bit Weights](/how-bonsai-27b-packs-27b-class-reasoning-into-1-bit-weights/)
+- [Bonsai Distillation Explained: From Qwen3.6-27B to a Phone-Friendly 3.9 GB Model](/bonsai-distillation-explained-from-qwen36-27b-to-a-phone-friendly-39-gb-model/)
 
 ### References
 
