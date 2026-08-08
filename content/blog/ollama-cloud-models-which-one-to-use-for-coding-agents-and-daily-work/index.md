@@ -156,3 +156,17 @@ ollama launch opencode --model glm-5.2:cloud
 ```
 
 The `:cloud` tag is what tells Ollama to use their hosted infrastructure instead of your local GPU.
+
+## References
+
+- [Ollama Cloud models](https://ollama.com/search?c=cloud&o=newest)
+- [Ollama Pricing](https://ollama.com/pricing)
+- [DeepSeek V4 Flash on Ollama](https://ollama.com/library/deepseek-v4-flash)
+- [DeepSeek V4 Pro on Ollama](https://ollama.com/library/deepseek-v4-pro)
+- [Kimi K3 on Ollama](https://ollama.com/library/kimi-k3)
+- [Kimi K2.7 Code on Ollama](https://ollama.com/library/kimi-k2.7-code)
+- [GLM-5.2 on Ollama](https://ollama.com/library/glm-5.2)
+- [MiniMax M3 on Ollama](https://ollama.com/library/minimax-m3)
+- [Qwen 3.5 on Ollama](https://ollama.com/library/qwen3.5)
+- [GPT-OSS on Ollama](https://ollama.com/library/gpt-oss)
+- [Nemotron-3-Nano on Ollama](https://ollama.com/library/nemotron-3-nano)
