@@ -79,9 +79,7 @@ scripts/
 submit-new-post.sh
 submit-to-indexnow.sh
 test-indexnow.sh
-WIP.txt
-BACKLOG.md
-readme-profile.md
+
 
 # IDEs / Editors
 .vscode/
@@ -111,3 +109,6 @@ terraform.tfstate*
 package-lock.json
 # Lockfiles (security - pin versions in package.json instead)
 yarn.lock
+
+# Local notes / research / scratchpad (do not commit)
+local/
