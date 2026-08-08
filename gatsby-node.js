@@ -4,10 +4,9 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
+  const tagPage = path.resolve(`./src/templates/tag-page.js`)
 
-  // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
       allMarkdownRemark(sort: { frontmatter: { date: ASC } }, limit: 1000) {
@@ -15,6 +14,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id
           fields {
             slug
+          }
+          frontmatter {
+            tags
           }
         }
       }
@@ -31,10 +33,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const posts = result.data.allMarkdownRemark.nodes
 
-  // Create blog posts pages
-  // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-  // `context` is available in the template as a prop and as a variable in GraphQL
-
   if (posts.length > 0) {
     posts.forEach((post, index) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id
@@ -47,6 +45,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id: post.id,
           previousPostId,
           nextPostId,
+        },
+      })
+    })
+
+    // Create tag pages
+    const allTags = new Set()
+    posts.forEach(post => {
+      if (post.frontmatter.tags) {
+        post.frontmatter.tags.forEach(tag => allTags.add(tag))
+      }
+    })
+
+    allTags.forEach(tag => {
+      const slug = `/tags/${tag.toLowerCase().replace(/\s+/g, "-")}/`
+      createPage({
+        path: slug,
+        component: tagPage,
+        context: {
+          tag,
         },
       })
     })
@@ -103,6 +120,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
+      tags: [String]
     }
 
     type Fields {

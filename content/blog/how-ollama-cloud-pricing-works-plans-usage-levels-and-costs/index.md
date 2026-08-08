@@ -137,3 +137,14 @@ Ollama Cloud pricing is designed around simplicity: pick a plan, pick a model, a
 For most individual developers, the Pro plan at $20/month with a medium-usage model like DeepSeek V4 Flash is the practical sweet spot. You get enough usage for daily coding work, the flexibility to switch between models, and the option to add extra credits when you need more.
 
 For heavy users, the Max plan removes the friction of watching limits. And for teams, the shared billing and administration make it easy to bring Ollama Cloud into an organization.
+
+## References
+
+- [Ollama Pricing](https://ollama.com/pricing)
+- [Ollama Cloud models](https://ollama.com/search?c=cloud&o=newest)
+- [Kimi K3 on Ollama](https://ollama.com/library/kimi-k3)
+- [DeepSeek V4 Flash on Ollama](https://ollama.com/library/deepseek-v4-flash)
+- [DeepSeek V4 Pro on Ollama](https://ollama.com/library/deepseek-v4-pro)
+- [GLM-5.2 on Ollama](https://ollama.com/library/glm-5.2)
+- [Kimi K2.7 Code on Ollama](https://ollama.com/library/kimi-k2.7-code)
+- [MiniMax M3 on Ollama](https://ollama.com/library/minimax-m3)

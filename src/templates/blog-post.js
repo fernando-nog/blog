@@ -29,6 +29,18 @@ const BlogPostTemplate = ({ data, location }) => {
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
+          {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+            <p className="post-tags">
+              {post.frontmatter.tags.map((tag, i) => (
+                <span key={tag}>
+                  <Link to={`/tags/${tag.toLowerCase().replace(/\s+/g, "-")}/`}>
+                    {tag}
+                  </Link>
+                  {i < post.frontmatter.tags.length - 1 ? ", " : ""}
+                </span>
+              ))}
+            </p>
+          )}
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post.html }}
